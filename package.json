@@ -1,9 +1,8 @@
 {
   "name": "trendwatcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
-  "description": "Breakout watchlist dashboard with NVIDIA-powered AI commentary and news feed",
-  "type": "module",
+  "description": "Breakout watchlist dashboard with Pollinations-powered AI commentary and Google News feed",
   "engines": {
     "node": ">=18"
   }

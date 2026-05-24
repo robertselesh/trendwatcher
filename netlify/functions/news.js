@@ -1,7 +1,7 @@
-// Google News RSS fetcher per ticker — no API key needed
+// Google News RSS fetcher per ticker - no API key needed
 // GET ?ticker=NVDA  -> { ticker, items: [{title, link, pubDate, source}] }
 
-export const handler = async (event) => {
+exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: corsHeaders(), body: '' };
   }
@@ -9,7 +9,8 @@ export const handler = async (event) => {
     return reply(405, { error: 'GET only' });
   }
 
-  const ticker = (event.queryStringParameters?.ticker || '').toUpperCase().trim();
+  const qs = event.queryStringParameters || {};
+  const ticker = String(qs.ticker || '').toUpperCase().trim();
   if (!ticker || !/^[A-Z0-9.\-]{1,10}$/.test(ticker)) {
     return reply(400, { error: 'Valid ticker required (1-10 chars, A-Z 0-9 . -)' });
   }
@@ -34,15 +35,14 @@ export const handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
+      headers: Object.assign({
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=900, s-maxage=900',
-        ...corsHeaders()
-      },
-      body: JSON.stringify({ ticker, items, fetchedAt: new Date().toISOString() })
+        'Cache-Control': 'public, max-age=900, s-maxage=900'
+      }, corsHeaders()),
+      body: JSON.stringify({ ticker: ticker, items: items, fetchedAt: new Date().toISOString() })
     };
   } catch (err) {
-    return reply(500, { error: String(err?.message || err) });
+    return reply(500, { error: String((err && err.message) || err) });
   }
 };
 
@@ -83,8 +83,8 @@ function corsHeaders() {
 
 function reply(statusCode, payload) {
   return {
-    statusCode,
-    headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    statusCode: statusCode,
+    headers: Object.assign({ 'Content-Type': 'application/json' }, corsHeaders()),
     body: JSON.stringify(payload)
   };
 }
