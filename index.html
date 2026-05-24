@@ -1359,19 +1359,24 @@ const PICKS_SUMMARY = () => PICKS.map(p => {
   return `${p.ticker} (${p.themeLabel}, conv ${p.conviction}/5, ${p.risk.toUpperCase()} risk${evStr}): ${p.thesis.slice(0, 120)}`;
 }).join('\n');
 
-const SYSTEM_PROMPT = `Te egy okos, koncíz amerikai mid-cap equity analyst vagy, magyar nyelven válaszolsz. Robert egy €30-100k portfolio-t kezel és breakout candidate-eket monitoroz. A teljes 30 pickes watchlist alább van. Válaszaid:
-- Konkrétak: ticker, szám, valós ok
-- Rövidek: 2-5 mondat, vagy struktúrált bullets ha kell
-- Soha ne mondj olyat amit a watchlisten kívül nem ellenőrizhetsz (pl. tegnapi árváltozás)
-- Ne kezdd "íme" / "itt van" / "természetesen" frázissal
-- Ha bizonytalan vagy egy adatban, mondd ki
-- Magyar nyelv, de tickerek és szakkifejezések angolul`;
+const SYSTEM_PROMPT = `Te MAGYAR NYELVŰ pénzügyi elemző vagy. Robert egy €30-100k portfolio-t kezel.
+KRITIKUS SZABÁLYOK:
+1. CSAK MAGYARUL válaszolj. Tickerek és szakkifejezések maradhatnak angolul (CRDO, EV, conviction, risk, breakout), de a mondatok magyarul vannak.
+2. Konkrét válaszok: ticker neveket nevezz, számokat adj
+3. Rövid és lényegre törő: 3-8 mondat vagy strukturált bullet pontok
+4. Soha ne találj ki adatot (pl. tegnapi árváltozás amit nem látsz)
+5. Ne kezdd "íme" / "itt van" / "természetesen" frázissal
+6. Ha bizonytalan vagy, mondd ki
+
+PÉLDA jó válasz: "A CRDO és VRT párosban a CRDO a tisztább play: 5/5 conviction, EV $212, AI-interconnect szűk keresztmetszet. A VRT inkább cooling/power infra: kevésbé specifikus, de stabilabb. Rövidtávra (4-8 hét) CRDO, hosszabb távra VRT diverzifikáció."`;
 
 async function aiCall(userMessage, opts = {}) {
   const messages = [];
+  // Add explicit Hungarian instruction inline (some smaller models ignore system role)
+  const wrappedUserMsg = '[VÁLASZOLJ MAGYARUL]\n\nItt a 30 pickes watchlist:\n\n' + PICKS_SUMMARY() + '\n\nKérdés: ' + userMessage + '\n\n(Emlékeztető: magyarul válaszolj, konkrét tickerekkel és számokkal.)';
   messages.push({
     role: 'user',
-    content: 'Itt a 30 pickes watchlist:\n\n' + PICKS_SUMMARY() + '\n\nKérdés: ' + userMessage
+    content: wrappedUserMsg
   });
 
   const resp = await fetch('/api/ai', {
@@ -1380,7 +1385,7 @@ async function aiCall(userMessage, opts = {}) {
     body: JSON.stringify({
       messages,
       system: SYSTEM_PROMPT,
-      maxTokens: opts.maxTokens || 700,
+      maxTokens: opts.maxTokens || 1200,
       temperature: opts.temperature || 0.6,
       model: opts.model || 'openai'
     })
@@ -1399,8 +1404,12 @@ async function newsCall(ticker) {
 }
 
 // ===== Daily brief (auto-load, 6h cache) =====
-const BRIEF_CACHE_KEY = 'bw_daily_brief_v1';
+// v2 cache key resets cache when ad-stripping / prompts change
+const BRIEF_CACHE_KEY = 'bw_daily_brief_v2';
 const BRIEF_TTL = 6 * 60 * 60 * 1000; // 6 hours
+
+// Drop legacy cache from older builds (had ads / English responses)
+try { localStorage.removeItem('bw_daily_brief_v1'); } catch {}
 
 async function loadDailyBrief(force = false) {
   const el = document.getElementById('commentary');
@@ -1423,15 +1432,15 @@ async function loadDailyBrief(force = false) {
 
   try {
     const brief = await aiCall(
-      'Adj egy 4-5 mondatos magyar daily brief-et: (1) melyik 2-3 téma a legforróbb a watchlist alapján és miért, (2) melyik 1-2 pick-re érdemes ma figyelni, (3) milyen makro vagy szektorális kockázat dominál most. Konkrét ticker-eket nevezz meg, számszerű érveket adj ahol lehet.',
-      { maxTokens: 500 }
+      'Adj egy 5-7 mondatos MAGYAR daily brief-et a watchlist alapján: (1) melyik 2-3 téma a legforróbb most és miért (konkrét tickerekkel), (2) melyik 1-2 pick-re érdemes ma elsőként figyelni és milyen catalyst miatt, (3) milyen makro vagy szektorális kockázat dominál. Hivatkozz konkrét tickerekre és EV számokra. Ne legyen lista vagy bullet, folyamatos szöveg legyen.',
+      { maxTokens: 800 }
     );
     el.textContent = '> ' + brief;
     el.classList.remove('loading');
     refresh.textContent = '◆ SYNC ' + new Date().toLocaleTimeString('hu-HU');
     try { localStorage.setItem(BRIEF_CACHE_KEY, JSON.stringify({ t: Date.now(), text: brief })); } catch {}
   } catch (err) {
-    el.textContent = '✗ AI offline (' + (err.message || err) + '). A statikus adatok és filterek így is működnek.';
+    el.textContent = '✗ AI offline (' + (err.message || err) + '). A statikus adatok és filterek így is működnek. Próbáld újra a REFRESH_BRIEF gombbal.';
     el.classList.remove('loading');
   }
 }
