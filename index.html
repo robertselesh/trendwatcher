@@ -602,6 +602,156 @@
   }
   .checklist .checklist-status { color: var(--neon-red); }
   .checklist.ready .checklist-status { color: var(--neon-lime); text-shadow: 0 0 4px var(--neon-lime); }
+
+  /* === AI Chat box === */
+  .ai-chat { margin-top: 14px; border-top: 1px dashed var(--neon-magenta); padding-top: 12px; }
+  .ai-chat-log {
+    max-height: 280px; overflow-y: auto;
+    margin-bottom: 8px;
+    font-size: 12px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .ai-chat-log:empty { display: none; }
+  .ai-msg {
+    padding: 7px 10px;
+    border-left: 2px solid;
+    background: rgba(255,255,255,0.02);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .ai-msg.user { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+  .ai-msg.user::before { content: '> YOU :: '; font-weight: 700; opacity: 0.6; }
+  .ai-msg.bot { border-color: var(--neon-magenta); color: var(--text); }
+  .ai-msg.bot::before { content: '> AI :: '; font-weight: 700; color: var(--neon-magenta); }
+  .ai-msg.err { border-color: var(--neon-red); color: var(--neon-red); }
+  .ai-msg.err::before { content: '✗ ERR :: '; font-weight: 700; }
+  .ai-chat-form { display: flex; gap: 8px; }
+  .ai-chat-form input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--dim);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12px;
+    padding: 7px 10px;
+    letter-spacing: 0.02em;
+  }
+  .ai-chat-form input:focus {
+    outline: none;
+    border-color: var(--neon-magenta);
+    box-shadow: 0 0 8px rgba(255,43,214,0.3);
+  }
+  .ai-chat-form input::placeholder { color: var(--muted); font-style: italic; }
+  .ai-suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .ai-suggestion {
+    background: transparent;
+    border: 1px dashed var(--dim);
+    color: var(--muted);
+    font-family: inherit; font-size: 10px;
+    padding: 3px 8px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ai-suggestion:hover { border-color: var(--neon-magenta); color: var(--neon-magenta); }
+
+  /* === Card AI/News buttons === */
+  .card-actions { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .card-action {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 10px;
+    padding: 6px 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    min-width: 90px;
+  }
+  .card-action:hover {
+    border-color: var(--accent-color, var(--neon-cyan));
+    color: var(--accent-color, var(--neon-cyan));
+    text-shadow: 0 0 4px var(--accent-color, var(--neon-cyan));
+  }
+
+  /* === Modal === */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--panel);
+    border: 1px solid var(--neon-magenta);
+    box-shadow: 0 0 40px rgba(255,43,214,0.25);
+    max-width: 720px; width: 100%;
+    padding: 18px 22px 22px;
+    position: relative;
+    color: var(--text);
+  }
+  .modal::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--neon-magenta);
+    box-shadow: 0 0 8px var(--neon-magenta);
+  }
+  .modal-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px dashed var(--dim);
+    padding-bottom: 10px; margin-bottom: 12px;
+  }
+  .modal-title {
+    font-size: 18px;
+    color: var(--neon-magenta);
+    text-shadow: 0 0 6px var(--neon-magenta);
+    letter-spacing: 0.05em;
+  }
+  .modal-close {
+    background: transparent; border: 1px solid var(--neon-red);
+    color: var(--neon-red);
+    font-family: inherit; font-size: 11px;
+    padding: 3px 9px;
+    cursor: pointer; letter-spacing: 0.1em;
+  }
+  .modal-close:hover { background: var(--neon-red); color: var(--bg); }
+  .modal-body { font-size: 13px; line-height: 1.6; white-space: pre-wrap; }
+  .modal-body.loading { color: var(--neon-yellow); font-style: italic; }
+  .modal-body.loading::after { content: '...'; animation: dots 1s steps(4) infinite; }
+  .modal-news-list {
+    list-style: none; padding: 0; margin: 12px 0 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .modal-news-list li {
+    padding: 8px 10px;
+    border-left: 2px solid var(--neon-cyan);
+    background: rgba(0,240,255,0.04);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .modal-news-list a {
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+  }
+  .modal-news-list a:hover { color: var(--neon-cyan); text-shadow: 0 0 4px var(--neon-cyan); }
+  .modal-news-list .meta {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 3px;
+  }
 </style>
 </head>
 <body>
@@ -615,12 +765,37 @@
 </header>
 
 <section class="commentary">
-  <div class="body loading" id="commentary">// Init AI link... Click [QUERY_AI] to execute</div>
+  <div class="body loading" id="commentary">// Init AI link... auto-querying daily brief</div>
   <div class="commentary-actions">
-    <button class="btn" id="refreshAi">▶ QUERY_AI</button>
+    <button class="btn" id="refreshAi">▶ REFRESH_BRIEF</button>
     <span style="font-size: 10px; color: var(--dim); letter-spacing: 0.1em;" id="lastRefresh"></span>
   </div>
+  <div class="ai-chat">
+    <div class="ai-chat-log" id="aiChatLog"></div>
+    <form class="ai-chat-form" id="aiChatForm">
+      <input type="text" id="aiChatInput" placeholder="Ask anything about the watchlist… eg: melyik 3 pick a legjobb most?" autocomplete="off" />
+      <button class="btn" type="submit">▶ ASK</button>
+    </form>
+    <div class="ai-suggestions" id="aiSuggestions">
+      <button class="ai-suggestion" data-q="Melyik 3 pick a legjobb risk/reward most?">Top 3 risk/reward</button>
+      <button class="ai-suggestion" data-q="Hasonlítsd össze a CRDO és VRT pickeket. Melyiket válasszam?">CRDO vs VRT</button>
+      <button class="ai-suggestion" data-q="Melyik a legrosszabb pick a listán és miért?">Legrosszabb pick</button>
+      <button class="ai-suggestion" data-q="Mit kell figyelni a következő 2 hétben?">2-hetes outlook</button>
+    </div>
+  </div>
 </section>
+
+<!-- Modal for deep-dive + news -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">…</div>
+      <button class="modal-close" id="modalClose">✕ CLOSE</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <ul class="modal-news-list" id="modalNewsList"></ul>
+  </div>
+</div>
 
 <section class="sizer">
   <div class="sizer-inputs">
@@ -1130,6 +1305,10 @@ function render() {
           <ul class="risks">${p.risks.map(r => `<li>${r}</li>`).join('')}</ul>
         </details>
         ${checklistBlock}
+        <div class="card-actions">
+          <button class="card-action" data-action="news" data-ticker="${p.ticker}">▸ NEWS</button>
+          <button class="card-action" data-action="deepdive" data-ticker="${p.ticker}">▸ AI_DEEP_DIVE</button>
+        </div>
         <div class="card-footer">
           <a class="link" href="${chartUrl(p.ticker)}" target="_blank" rel="noopener">▸ YAHOO</a>
           <a class="link" href="${tradingViewUrl(p.ticker)}" target="_blank" rel="noopener">▸ TRADINGVIEW</a>
@@ -1173,31 +1352,233 @@ document.getElementById('sortSel').addEventListener('change', (e) => {
   render();
 });
 
-document.getElementById('refreshAi').addEventListener('click', async () => {
+// ===== AI helpers =====
+const PICKS_SUMMARY = () => PICKS.map(p => {
+  const scen = getScenarios(p.ticker);
+  const evStr = scen ? ` | EV: $${scen.ev.toFixed(0)} (${scen.evUpside.toFixed(0)}%)` : '';
+  return `${p.ticker} (${p.themeLabel}, conv ${p.conviction}/5, ${p.risk.toUpperCase()} risk${evStr}): ${p.thesis.slice(0, 120)}`;
+}).join('\n');
+
+const SYSTEM_PROMPT = `Te egy okos, koncíz amerikai mid-cap equity analyst vagy, magyar nyelven válaszolsz. Robert egy €30-100k portfolio-t kezel és breakout candidate-eket monitoroz. A teljes 30 pickes watchlist alább van. Válaszaid:
+- Konkrétak: ticker, szám, valós ok
+- Rövidek: 2-5 mondat, vagy struktúrált bullets ha kell
+- Soha ne mondj olyat amit a watchlisten kívül nem ellenőrizhetsz (pl. tegnapi árváltozás)
+- Ne kezdd "íme" / "itt van" / "természetesen" frázissal
+- Ha bizonytalan vagy egy adatban, mondd ki
+- Magyar nyelv, de tickerek és szakkifejezések angolul`;
+
+async function aiCall(userMessage, opts = {}) {
+  const messages = [];
+  messages.push({
+    role: 'user',
+    content: 'Itt a 30 pickes watchlist:\n\n' + PICKS_SUMMARY() + '\n\nKérdés: ' + userMessage
+  });
+
+  const resp = await fetch('/api/ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      messages,
+      system: SYSTEM_PROMPT,
+      maxTokens: opts.maxTokens || 700,
+      temperature: opts.temperature || 0.6,
+      model: opts.model || 'openai'
+    })
+  });
+
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data.error || ('HTTP ' + resp.status));
+  return data.text || '';
+}
+
+async function newsCall(ticker) {
+  const resp = await fetch('/api/news?ticker=' + encodeURIComponent(ticker));
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data.error || ('HTTP ' + resp.status));
+  return data.items || [];
+}
+
+// ===== Daily brief (auto-load, 6h cache) =====
+const BRIEF_CACHE_KEY = 'bw_daily_brief_v1';
+const BRIEF_TTL = 6 * 60 * 60 * 1000; // 6 hours
+
+async function loadDailyBrief(force = false) {
   const el = document.getElementById('commentary');
   const refresh = document.getElementById('lastRefresh');
-  // Graceful fallback when file is shared / opened outside Cowork
-  if (!(window.cowork && typeof window.cowork.askClaude === 'function')) {
-    el.textContent = '> AI_LINK offline. AI kommentár csak a Cowork appban él. A statikus adatok és filterek így is működnek.';
-    el.classList.remove('loading');
-    return;
+
+  if (!force) {
+    try {
+      const cached = JSON.parse(localStorage.getItem(BRIEF_CACHE_KEY) || 'null');
+      if (cached && (Date.now() - cached.t) < BRIEF_TTL) {
+        el.textContent = '> ' + cached.text;
+        el.classList.remove('loading');
+        refresh.textContent = '◆ CACHED ' + new Date(cached.t).toLocaleTimeString('hu-HU');
+        return;
+      }
+    } catch {}
   }
-  el.textContent = '> Querying AI link';
+
+  el.textContent = '> Generating daily brief';
   el.classList.add('loading');
+
   try {
-    const summary = PICKS.map(p => `${p.ticker} (${p.themeLabel}, conv ${p.conviction}/5): ${p.thesis.slice(0, 100)}…`).join('\n');
-    const result = await window.cowork.askClaude(
-      `A következő ${PICKS.length} mid/large-cap "breakout candidate" watchlist alapján adj egy 3-4 mondatos, magyarul írt aktuális piaci kommentárt: melyik 2-3 téma a legforróbb most (2026 május), miért, és melyik pick-re érdemes elsőként figyelni a következő 2-4 hétben. Légy konkrét, ne általánosíts. Ne kezdd "íme" vagy "itt van" frázissal.\n\n${summary}`,
-      []
+    const brief = await aiCall(
+      'Adj egy 4-5 mondatos magyar daily brief-et: (1) melyik 2-3 téma a legforróbb a watchlist alapján és miért, (2) melyik 1-2 pick-re érdemes ma figyelni, (3) milyen makro vagy szektorális kockázat dominál most. Konkrét ticker-eket nevezz meg, számszerű érveket adj ahol lehet.',
+      { maxTokens: 500 }
     );
-    el.textContent = '> ' + result;
+    el.textContent = '> ' + brief;
     el.classList.remove('loading');
     refresh.textContent = '◆ SYNC ' + new Date().toLocaleTimeString('hu-HU');
+    try { localStorage.setItem(BRIEF_CACHE_KEY, JSON.stringify({ t: Date.now(), text: brief })); } catch {}
   } catch (err) {
-    el.textContent = '✗ ERROR: ' + (err.message || err);
+    el.textContent = '✗ AI offline (' + (err.message || err) + '). A statikus adatok és filterek így is működnek.';
     el.classList.remove('loading');
   }
+}
+
+document.getElementById('refreshAi').addEventListener('click', () => loadDailyBrief(true));
+
+// ===== Q&A chat =====
+const chatLog = document.getElementById('aiChatLog');
+const chatForm = document.getElementById('aiChatForm');
+const chatInput = document.getElementById('aiChatInput');
+
+function appendMsg(text, kind) {
+  const div = document.createElement('div');
+  div.className = 'ai-msg ' + kind;
+  div.textContent = text;
+  chatLog.appendChild(div);
+  chatLog.scrollTop = chatLog.scrollHeight;
+  return div;
+}
+
+async function sendChat(question) {
+  if (!question.trim()) return;
+  appendMsg(question, 'user');
+  chatInput.value = '';
+  const loadingMsg = appendMsg('Thinking…', 'bot');
+  try {
+    const answer = await aiCall(question);
+    loadingMsg.textContent = answer;
+  } catch (err) {
+    loadingMsg.className = 'ai-msg err';
+    loadingMsg.textContent = 'AI offline: ' + (err.message || err);
+  }
+}
+
+chatForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  sendChat(chatInput.value);
 });
+
+document.querySelectorAll('.ai-suggestion').forEach(btn => {
+  btn.addEventListener('click', () => sendChat(btn.dataset.q));
+});
+
+// ===== Modal (deep-dive + news) =====
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+const modalNewsList = document.getElementById('modalNewsList');
+
+function openModal(title) {
+  modalTitle.textContent = title;
+  modalBody.textContent = '';
+  modalBody.className = 'modal-body loading';
+  modalBody.textContent = 'Loading';
+  modalNewsList.innerHTML = '';
+  modalBackdrop.classList.add('open');
+}
+function closeModal() {
+  modalBackdrop.classList.remove('open');
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', (e) => {
+  if (e.target === modalBackdrop) closeModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+async function showNews(ticker) {
+  openModal(ticker + ' :: NEWS_FEED');
+  try {
+    const items = await newsCall(ticker);
+    modalBody.classList.remove('loading');
+    if (!items.length) {
+      modalBody.textContent = 'No recent news found for ' + ticker;
+      return;
+    }
+    modalBody.textContent = items.length + ' recent stories from Google News:';
+    modalNewsList.innerHTML = items.map(it => {
+      const date = it.pubDate ? new Date(it.pubDate).toLocaleString('hu-HU', { dateStyle: 'short', timeStyle: 'short' }) : '';
+      return '<li><a href="' + it.link + '" target="_blank" rel="noopener">' + escapeHtml(it.title) + '</a><div class="meta">' + escapeHtml(it.source || '') + (date ? ' · ' + date : '') + '</div></li>';
+    }).join('');
+  } catch (err) {
+    modalBody.classList.remove('loading');
+    modalBody.textContent = '✗ Failed to load news: ' + (err.message || err);
+  }
+}
+
+async function showDeepDive(ticker) {
+  const pick = PICKS.find(p => p.ticker === ticker);
+  if (!pick) return;
+  openModal(ticker + ' :: AI_DEEP_DIVE');
+
+  try {
+    // Fetch news first to feed the AI
+    let newsContext = '';
+    try {
+      const items = await newsCall(ticker);
+      if (items.length) {
+        newsContext = '\n\nFRISS HÍREK (' + items.length + ' db, Google News):\n' +
+          items.slice(0, 8).map((it, i) => (i+1) + '. ' + it.title + (it.source ? ' [' + it.source + ']' : '')).join('\n');
+      }
+    } catch {}
+
+    const scen = getScenarios(ticker);
+    const scenText = scen ? `Bull $${scen.bull} (${scen.probs[0]}%), Base $${scen.base} (${scen.probs[1]}%), Bear $${scen.bear} (${scen.probs[2]}%), EV $${scen.ev.toFixed(0)} (${scen.evUpside.toFixed(0)}%)` : 'n/a';
+
+    const prompt = `Csinálj egy 200-250 szavas magyar deep-dive analízist a ${ticker} (${pick.name}) pick-ről. Adatok:
+
+Thesis: ${pick.thesis}
+Theme: ${pick.themeLabel}, Conv: ${pick.conviction}/5, Risk: ${pick.risk}
+Mcap: ${pick.mcap}
+Scenarios: ${scenText}
+Catalysts: ${pick.catalysts.join('; ')}
+Risks: ${pick.risks.join('; ')}
+${newsContext}
+
+Struktúra:
+1. Mi újság (friss hírek alapján mi változott)
+2. Thesis még él? (megerősödött / gyengült / változatlan)
+3. Mit figyelj a következő 2-4 hétben (konkrét catalyst-okat)
+4. Ár szint: hol szállj be / hol exit (scenarios alapján)`;
+
+    const answer = await aiCall(prompt, { maxTokens: 1000 });
+    modalBody.classList.remove('loading');
+    modalBody.textContent = answer;
+  } catch (err) {
+    modalBody.classList.remove('loading');
+    modalBody.textContent = '✗ Deep-dive failed: ' + (err.message || err);
+  }
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Card action delegation (news + deep-dive)
+document.getElementById('grid').addEventListener('click', (e) => {
+  const btn = e.target.closest('.card-action');
+  if (!btn) return;
+  const t = btn.dataset.ticker;
+  if (btn.dataset.action === 'news') showNews(t);
+  else if (btn.dataset.action === 'deepdive') showDeepDive(t);
+});
+
+// Auto-load daily brief on page open
+setTimeout(() => loadDailyBrief(false), 400);
 
 // Position Sizer logic
 function calculateSizing() {
