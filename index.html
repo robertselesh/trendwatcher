@@ -603,6 +603,204 @@
   .checklist .checklist-status { color: var(--neon-red); }
   .checklist.ready .checklist-status { color: var(--neon-lime); text-shadow: 0 0 4px var(--neon-lime); }
 
+  /* === Live price + sparkline === */
+  .live-fresh {
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 6px 0 2px;
+    font-size: 11px;
+  }
+  .live-fresh .live-price {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent-color, var(--neon-cyan));
+    text-shadow: 0 0 4px var(--accent-color, var(--neon-cyan));
+  }
+  .live-fresh .live-change {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .live-fresh .live-change.pos { color: var(--neon-lime); text-shadow: 0 0 3px var(--neon-lime); }
+  .live-fresh .live-change.neg { color: var(--neon-red); text-shadow: 0 0 3px var(--neon-red); }
+  .live-fresh .live-change.flat { color: var(--muted); }
+  .live-fresh .stale-tag {
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  canvas.sparkline {
+    display: block;
+    width: 100%;
+    height: 42px;
+    margin: 4px 0 8px;
+    border-bottom: 1px dashed var(--dim);
+  }
+
+  .sparkline-meta {
+    display: flex; justify-content: space-between;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: -4px 0 8px;
+  }
+
+  /* === Earnings badge === */
+  .earnings-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+    font-weight: 700;
+    margin-left: 4px;
+  }
+  .earnings-badge.soon {
+    border-color: var(--neon-yellow);
+    color: var(--neon-yellow);
+    text-shadow: 0 0 4px var(--neon-yellow);
+    animation: earn-pulse 2s ease-in-out infinite;
+  }
+  .earnings-badge.imminent {
+    border-color: var(--neon-orange);
+    color: var(--neon-orange);
+    text-shadow: 0 0 4px var(--neon-orange);
+    animation: earn-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes earn-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+
+  /* === Sector heat map === */
+  .heatmap {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 18px;
+    padding: 10px 12px;
+    background: var(--panel);
+    border: 1px solid var(--dim);
+    position: relative;
+  }
+  .heatmap::before {
+    content: '◆ SECTOR_HEAT';
+    position: absolute; top: -10px; left: 12px;
+    background: var(--bg); padding: 0 8px;
+    color: var(--neon-lime);
+    font-size: 11px; letter-spacing: 0.15em;
+    text-shadow: 0 0 6px var(--neon-lime);
+  }
+  .heat-cell {
+    padding: 10px 8px;
+    border: 1px solid var(--dim);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--panel-2);
+  }
+  .heat-cell:hover { border-color: var(--accent-color, var(--neon-cyan)); }
+  .heat-cell.active {
+    border-color: var(--accent-color, var(--neon-cyan));
+    box-shadow: inset 0 0 8px var(--accent-glow, rgba(0,240,255,0.2));
+  }
+  .heat-cell.t-infra { --accent-color: var(--neon-cyan); --accent-glow: rgba(0,240,255,0.18); }
+  .heat-cell.t-energy { --accent-color: var(--neon-yellow); --accent-glow: rgba(255,229,0,0.18); }
+  .heat-cell.t-industrial { --accent-color: var(--neon-lime); --accent-glow: rgba(170,255,0,0.18); }
+  .heat-cell.t-defense { --accent-color: var(--neon-magenta); --accent-glow: rgba(255,43,214,0.18); }
+  .heat-cell.t-crypto { --accent-color: var(--neon-orange); --accent-glow: rgba(255,140,0,0.18); }
+  .heat-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-color, var(--neon-cyan));
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .heat-value {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  .heat-value.pos { color: var(--neon-lime); text-shadow: 0 0 6px var(--neon-lime); }
+  .heat-value.neg { color: var(--neon-red); text-shadow: 0 0 6px var(--neon-red); }
+  .heat-value.flat { color: var(--muted); }
+  .heat-count {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .heatmap-actions {
+    grid-column: 1 / -1;
+    display: flex; gap: 8px; align-items: center;
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .heatmap-actions .btn-corr {
+    background: transparent;
+    border: 1px solid var(--neon-lime);
+    color: var(--neon-lime);
+    font-family: inherit; font-size: 10px;
+    padding: 4px 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer;
+    text-shadow: 0 0 4px rgba(170,255,0,0.5);
+  }
+  .heatmap-actions .btn-corr:hover {
+    background: var(--neon-lime); color: var(--bg);
+    box-shadow: 0 0 12px var(--neon-lime);
+    text-shadow: none;
+  }
+
+  /* === Correlation matrix === */
+  .corr-wrap {
+    overflow-x: auto;
+    margin-top: 12px;
+  }
+  .corr-grid {
+    border-collapse: collapse;
+    font-size: 10px;
+    margin: 0 auto;
+  }
+  .corr-grid th, .corr-grid td {
+    padding: 4px 6px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+    min-width: 38px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .corr-grid th {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 3px var(--neon-cyan);
+    background: var(--panel);
+    position: sticky;
+    top: 0;
+  }
+  .corr-grid th.row-h { text-align: right; padding-right: 10px; }
+  .corr-legend {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 10px;
+    font-size: 10px; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+  .corr-legend .swatch {
+    display: inline-block; width: 14px; height: 14px;
+    vertical-align: middle; margin-right: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
   /* === AI Chat box === */
   .ai-chat { margin-top: 14px; border-top: 1px dashed var(--neon-magenta); padding-top: 12px; }
   .ai-chat-log {
@@ -782,6 +980,20 @@
       <button class="ai-suggestion" data-q="Melyik a legrosszabb pick a listán és miért?">Legrosszabb pick</button>
       <button class="ai-suggestion" data-q="Mit kell figyelni a következő 2 hétben?">2-hetes outlook</button>
     </div>
+  </div>
+</section>
+
+<!-- Sector heat map -->
+<section class="heatmap" id="heatmap">
+  <div class="heat-cell t-infra" data-theme="infra"><div class="heat-label">AI_INFRA</div><div class="heat-value flat" data-v="ai_infra">—</div><div class="heat-count" data-c="ai_infra"></div></div>
+  <div class="heat-cell t-energy" data-theme="energy"><div class="heat-label">AI_ENERGY</div><div class="heat-value flat" data-v="ai_energy">—</div><div class="heat-count" data-c="ai_energy"></div></div>
+  <div class="heat-cell t-industrial" data-theme="industrial"><div class="heat-label">INDUSTRIAL</div><div class="heat-value flat" data-v="industrial">—</div><div class="heat-count" data-c="industrial"></div></div>
+  <div class="heat-cell t-defense" data-theme="defense"><div class="heat-label">DEFENSE</div><div class="heat-value flat" data-v="defense">—</div><div class="heat-count" data-c="defense"></div></div>
+  <div class="heat-cell t-crypto" data-theme="crypto"><div class="heat-label">CRYPTO</div><div class="heat-value flat" data-v="crypto">—</div><div class="heat-count" data-c="crypto"></div></div>
+  <div class="heatmap-actions">
+    <span>SCOPE://</span>
+    <button class="btn-corr" id="openCorr">▶ CORRELATION_MATRIX</button>
+    <span style="margin-left:auto;" id="corrHint">60d returns · click cell to inspect</span>
   </div>
 </section>
 
@@ -1218,6 +1430,34 @@ function render() {
     const starred = watchlist.has(p.ticker);
     const riskLabel = p.risk === 'low' ? 'LOW_RISK' : p.risk === 'med' ? 'MED_RISK' : 'HIGH_RISK';
     const live = LIVE[p.ticker];
+    const fresh = liveFresh[p.ticker];
+
+    // Live fresh price block (from Yahoo)
+    const freshBlock = (fresh && fresh.price && !fresh.error) ? `
+      <div class="live-fresh">
+        <span class="live-price">$${fresh.price.toFixed(2)}</span>
+        <span class="live-change ${fresh.changePct > 0 ? 'pos' : fresh.changePct < 0 ? 'neg' : 'flat'}">
+          ${fresh.changePct > 0 ? '+' : ''}${fresh.changePct.toFixed(2)}% (${fresh.change > 0 ? '+' : ''}$${Math.abs(fresh.change).toFixed(2)})
+        </span>
+        <span class="stale-tag">YH ${new Date().toLocaleTimeString('hu-HU', {hour:'2-digit',minute:'2-digit'})}</span>
+      </div>
+      <canvas class="sparkline" data-ticker="${p.ticker}"></canvas>
+      ${(fresh.fiftyTwoWeekHigh && fresh.fiftyTwoWeekLow) ? `<div class="sparkline-meta"><span>52W LO $${fresh.fiftyTwoWeekLow.toFixed(2)}</span><span>52W HI $${fresh.fiftyTwoWeekHigh.toFixed(2)}</span></div>` : ''}
+    ` : '';
+
+    // Earnings badge
+    let earningsBadge = '';
+    if (fresh && fresh.earningsDaysAway !== null && fresh.earningsDaysAway !== undefined) {
+      const days = fresh.earningsDaysAway;
+      let cls = '';
+      if (days >= 0 && days <= 7) cls = 'imminent';
+      else if (days > 7 && days <= 21) cls = 'soon';
+      if (days >= -2 && days <= 90) {
+        const label = days < 0 ? ('EARN ' + Math.abs(days) + 'd AGO') : ('EARN +' + days + 'd');
+        earningsBadge = `<span class="earnings-badge ${cls}">${label}</span>`;
+      }
+    }
+
     const liveBlock = live ? `
       <div class="live">
         <div class="live-top">
@@ -1291,7 +1531,9 @@ function render() {
           <span class="badge b-theme">${p.themeLabel}</span>
           <span class="badge b-mc">${p.mcap}</span>
           <span class="badge b-risk-${p.risk}">${riskLabel}</span>
+          ${earningsBadge}
         </div>
+        ${freshBlock}
         ${liveBlock}
         ${scenBlock}
         <div class="conviction">
@@ -1332,6 +1574,12 @@ function render() {
       render();
     });
   });
+
+  // Repaint canvas-based visuals after innerHTML settles
+  requestAnimationFrame(() => {
+    if (typeof paintSparklines === 'function') paintSparklines();
+    if (typeof paintHeatmap === 'function') paintHeatmap();
+  });
 }
 
 document.querySelectorAll('.chip[data-theme]').forEach(chip => {
@@ -1351,6 +1599,386 @@ document.getElementById('sortSel').addEventListener('change', (e) => {
   sortBy = e.target.value;
   render();
 });
+
+// ===== Yahoo Finance live data store =====
+const liveFresh = {};
+
+const LIVE_CACHE_KEY = 'bw_live_data_v1';
+const LIVE_TTL = 15 * 60 * 1000; // 15 minutes
+
+// Hydrate from cache on init (instant render before fetch completes)
+try {
+  const cached = JSON.parse(localStorage.getItem(LIVE_CACHE_KEY) || 'null');
+  if (cached && (Date.now() - cached.t) < LIVE_TTL && cached.data) {
+    Object.assign(liveFresh, cached.data);
+  }
+} catch {}
+
+async function refreshLiveData() {
+  try {
+    const tickers = PICKS.map(p => p.ticker).join(',');
+    const resp = await fetch('/api/yfinance?tickers=' + tickers);
+    if (!resp.ok) return false;
+    const data = await resp.json();
+    if (data && data.data) {
+      let okCount = 0;
+      for (const t of Object.keys(data.data)) {
+        if (!data.data[t].error) {
+          liveFresh[t] = data.data[t];
+          okCount++;
+        }
+      }
+      try { localStorage.setItem(LIVE_CACHE_KEY, JSON.stringify({ t: Date.now(), data: liveFresh })); } catch {}
+      render();
+      paintSparklines();
+      paintHeatmap();
+      checkAlerts();
+      console.log('[yfinance] refreshed', okCount, 'tickers');
+      return true;
+    }
+  } catch (e) {
+    console.warn('[yfinance] refresh failed', e);
+  }
+  return false;
+}
+
+// Canvas sparkline drawer
+function drawSparkline(canvas, prices, color) {
+  if (!canvas || !prices || prices.length < 2) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  canvas.width = Math.max(1, Math.floor(W * dpr));
+  canvas.height = Math.max(1, Math.floor(H * dpr));
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  let min = Infinity, max = -Infinity;
+  for (const p of prices) { if (p < min) min = p; if (p > max) max = p; }
+  const range = (max - min) || 1;
+  const pad = 2;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Fill area (translucent)
+  ctx.beginPath();
+  for (let i = 0; i < prices.length; i++) {
+    const x = (i / (prices.length - 1)) * W;
+    const y = H - ((prices[i] - min) / range) * (H - 2 * pad) - pad;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.lineTo(W, H);
+  ctx.lineTo(0, H);
+  ctx.closePath();
+  ctx.fillStyle = color + '22';
+  ctx.fill();
+
+  // Stroke line
+  ctx.beginPath();
+  for (let i = 0; i < prices.length; i++) {
+    const x = (i / (prices.length - 1)) * W;
+    const y = H - ((prices[i] - min) / range) * (H - 2 * pad) - pad;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.6;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+
+  // Last point dot
+  const lastY = H - ((prices[prices.length - 1] - min) / range) * (H - 2 * pad) - pad;
+  ctx.beginPath();
+  ctx.arc(W - 2, lastY, 2.5, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+function paintSparklines() {
+  const themeColor = {
+    infra: '#00f0ff', energy: '#ffe500', industrial: '#aaff00', defense: '#ff2bd6', crypto: '#ff8c00'
+  };
+  document.querySelectorAll('canvas.sparkline').forEach(c => {
+    const t = c.dataset.ticker;
+    const fresh = liveFresh[t];
+    if (!fresh || !fresh.history || fresh.history.length < 2) return;
+    const pick = PICKS.find(p => p.ticker === t);
+    const baseColor = (pick && themeColor[pick.theme]) || '#00f0ff';
+    // Color reflects 60-day direction: green up, red down
+    const start = fresh.history[0].c;
+    const end = fresh.history[fresh.history.length - 1].c;
+    const dir = end > start ? '#aaff00' : end < start ? '#ff0040' : baseColor;
+    const prices = fresh.history.map(h => h.c);
+    drawSparkline(c, prices, dir);
+  });
+}
+
+// Sector heat map: average changePct per theme
+function paintHeatmap() {
+  const themes = ['infra', 'energy', 'industrial', 'defense', 'crypto'];
+  const themeKey = { infra: 'ai_infra', energy: 'ai_energy', industrial: 'industrial', defense: 'defense', crypto: 'crypto' };
+  for (const th of themes) {
+    const picksInTheme = PICKS.filter(p => p.theme === th);
+    const changes = picksInTheme.map(p => liveFresh[p.ticker]?.changePct).filter(v => typeof v === 'number');
+    const valEl = document.querySelector('.heat-value[data-v="' + themeKey[th] + '"]');
+    const countEl = document.querySelector('.heat-count[data-c="' + themeKey[th] + '"]');
+    if (!valEl) continue;
+    if (changes.length === 0) {
+      valEl.textContent = '—';
+      valEl.className = 'heat-value flat';
+      if (countEl) countEl.textContent = picksInTheme.length + ' picks';
+      continue;
+    }
+    const avg = changes.reduce((s, v) => s + v, 0) / changes.length;
+    valEl.textContent = (avg >= 0 ? '+' : '') + avg.toFixed(2) + '%';
+    valEl.className = 'heat-value ' + (avg > 0.1 ? 'pos' : avg < -0.1 ? 'neg' : 'flat');
+    if (countEl) countEl.textContent = changes.length + '/' + picksInTheme.length + ' live';
+  }
+}
+
+// Wire heat cells to filter chips
+document.querySelectorAll('.heat-cell').forEach(cell => {
+  cell.addEventListener('click', () => {
+    const theme = cell.dataset.theme;
+    const chip = document.querySelector('.chip[data-theme="' + theme + '"]');
+    if (chip) chip.click();
+    document.querySelectorAll('.heat-cell').forEach(c => c.classList.toggle('active', c === cell));
+  });
+});
+
+// ===== Alert system =====
+const ALERT_LOG_KEY = 'bw_alert_log_v1';
+function getAlertLog() {
+  try { return JSON.parse(localStorage.getItem(ALERT_LOG_KEY) || '{}'); }
+  catch { return {}; }
+}
+function recordAlert(ticker, type) {
+  const log = getAlertLog();
+  log[ticker + ':' + type] = Date.now();
+  try { localStorage.setItem(ALERT_LOG_KEY, JSON.stringify(log)); } catch {}
+}
+function alertCooledDown(ticker, type, hours = 24) {
+  const log = getAlertLog();
+  const last = log[ticker + ':' + type];
+  if (!last) return true;
+  return (Date.now() - last) > hours * 3600000;
+}
+
+async function ensureNotifPermission() {
+  if (typeof Notification === 'undefined') return false;
+  if (Notification.permission === 'granted') return true;
+  if (Notification.permission === 'denied') return false;
+  const r = await Notification.requestPermission();
+  return r === 'granted';
+}
+
+function fireNotif(title, body) {
+  if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+    new Notification(title, { body, icon: 'https://trendwatcher.netlify.app/favicon.ico' });
+  }
+  console.log('[ALERT]', title, body);
+}
+
+function checkAlerts() {
+  let triggered = 0;
+  for (const p of PICKS) {
+    const fresh = liveFresh[p.ticker];
+    const scen = getScenarios(p.ticker);
+    if (!fresh || !scen) continue;
+
+    // 1. Price reached base case target (within 2%)
+    if (fresh.price >= scen.base * 0.98 && alertCooledDown(p.ticker, 'TRIM')) {
+      recordAlert(p.ticker, 'TRIM');
+      fireNotif(p.ticker + ' :: TRIM SIGNAL', 'Price $' + fresh.price + ' hit base target $' + scen.base);
+      triggered++;
+    }
+    // 2. Price hit bull target (book profit zone)
+    if (fresh.price >= scen.bull * 0.95 && alertCooledDown(p.ticker, 'BULL_HIT')) {
+      recordAlert(p.ticker, 'BULL_HIT');
+      fireNotif(p.ticker + ' :: BULL TARGET HIT', 'Price $' + fresh.price + ' near bull $' + scen.bull);
+      triggered++;
+    }
+    // 3. Price dropped near bear target (stop loss zone)
+    if (fresh.price <= scen.bear * 1.05 && alertCooledDown(p.ticker, 'STOP')) {
+      recordAlert(p.ticker, 'STOP');
+      fireNotif(p.ticker + ' :: STOP LOSS WARNING', 'Price $' + fresh.price + ' near bear $' + scen.bear);
+      triggered++;
+    }
+    // 4. Earnings within 7 days
+    if (fresh.earningsDaysAway > 0 && fresh.earningsDaysAway <= 7 && alertCooledDown(p.ticker, 'EARN', 168)) {
+      recordAlert(p.ticker, 'EARN');
+      fireNotif(p.ticker + ' :: EARNINGS IN ' + fresh.earningsDaysAway + 'd', 'Prepare position. Check checklist.');
+      triggered++;
+    }
+  }
+  if (triggered > 0) console.log('[ALERT] fired', triggered, 'notifications');
+}
+
+// Ask for notification permission on first interaction (less intrusive than on load)
+document.addEventListener('click', function permHandler() {
+  ensureNotifPermission();
+  document.removeEventListener('click', permHandler);
+}, { once: true });
+
+// ===== Correlation matrix =====
+// Compute Pearson correlation between two return series
+function pearson(x, y) {
+  if (!x || !y || x.length < 3 || x.length !== y.length) return null;
+  const n = x.length;
+  let sx = 0, sy = 0;
+  for (let i = 0; i < n; i++) { sx += x[i]; sy += y[i]; }
+  const mx = sx / n, my = sy / n;
+  let cov = 0, vx = 0, vy = 0;
+  for (let i = 0; i < n; i++) {
+    const dx = x[i] - mx, dy = y[i] - my;
+    cov += dx * dy;
+    vx += dx * dx;
+    vy += dy * dy;
+  }
+  const denom = Math.sqrt(vx * vy);
+  if (denom === 0) return null;
+  return cov / denom;
+}
+
+// Convert close-price series into daily returns
+function toReturns(history) {
+  if (!history || history.length < 2) return [];
+  const out = [];
+  for (let i = 1; i < history.length; i++) {
+    const a = history[i - 1].c, b = history[i].c;
+    if (a > 0) out.push((b - a) / a);
+  }
+  return out;
+}
+
+// Align two return series to the same length (use overlap)
+function alignReturns(rA, rB) {
+  const n = Math.min(rA.length, rB.length);
+  return [rA.slice(-n), rB.slice(-n)];
+}
+
+// Color for correlation cell. Range [-1, 1].
+// Positive (concentration risk) -> magenta/red
+// Zero -> dim
+// Negative (hedge) -> lime/green
+function corrColor(r) {
+  if (r === null || isNaN(r)) return { bg: '#1a1a2a', fg: '#666' };
+  const abs = Math.min(1, Math.abs(r));
+  if (r >= 0) {
+    // 0 -> dim, 1 -> magenta full
+    const alpha = (0.15 + abs * 0.7).toFixed(2);
+    return {
+      bg: 'rgba(255,43,214,' + alpha + ')',
+      fg: abs > 0.55 ? '#fff' : '#ff9bef'
+    };
+  } else {
+    const alpha = (0.15 + abs * 0.7).toFixed(2);
+    return {
+      bg: 'rgba(170,255,0,' + alpha + ')',
+      fg: abs > 0.55 ? '#000' : '#aaff00'
+    };
+  }
+}
+
+function buildCorrelationMatrix() {
+  // Scope: watchlist tickers if any, else top 10 by conviction
+  let tickers = [...watchlist];
+  if (tickers.length < 3) {
+    tickers = [...PICKS].sort((a, b) => b.conviction - a.conviction).slice(0, 10).map(p => p.ticker);
+  }
+  // Filter only tickers with valid history
+  tickers = tickers.filter(t => liveFresh[t] && liveFresh[t].history && liveFresh[t].history.length >= 10);
+  if (tickers.length < 2) return { tickers: [], matrix: [], note: 'Need at least 2 tickers with 60d history. Wait for data load or star more picks.' };
+
+  const returns = {};
+  for (const t of tickers) returns[t] = toReturns(liveFresh[t].history);
+
+  const matrix = [];
+  for (let i = 0; i < tickers.length; i++) {
+    const row = [];
+    for (let j = 0; j < tickers.length; j++) {
+      if (i === j) { row.push(1); continue; }
+      const [a, b] = alignReturns(returns[tickers[i]], returns[tickers[j]]);
+      row.push(pearson(a, b));
+    }
+    matrix.push(row);
+  }
+
+  return { tickers, matrix, note: null };
+}
+
+function renderCorrelationModal() {
+  openModal('CORRELATION_MATRIX :: 60d returns');
+  const { tickers, matrix, note } = buildCorrelationMatrix();
+  if (note) {
+    modalBody.classList.remove('loading');
+    modalBody.textContent = note;
+    return;
+  }
+
+  // Compute summary stats
+  const offDiag = [];
+  for (let i = 0; i < tickers.length; i++)
+    for (let j = i + 1; j < tickers.length; j++)
+      if (matrix[i][j] !== null) offDiag.push({ a: tickers[i], b: tickers[j], r: matrix[i][j] });
+  offDiag.sort((x, y) => y.r - x.r);
+
+  const highest = offDiag.slice(0, 3);
+  const lowest = offDiag.slice(-3).reverse();
+  const avgR = offDiag.length ? offDiag.reduce((s, x) => s + x.r, 0) / offDiag.length : 0;
+
+  let html = '';
+  html += '<div style="font-size:12px;line-height:1.6;margin-bottom:10px;">';
+  html += '<strong>Scope:</strong> ' + tickers.length + ' tickers · <strong>Avg correlation:</strong> ' + avgR.toFixed(2);
+  html += ' <span style="color:var(--muted);">(0 = diverz. perfect, 1 = move identical)</span>';
+  html += '</div>';
+
+  if (highest.length) {
+    html += '<div style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--neon-magenta);">⚠ HIGHEST (concentration risk)</div>';
+    html += '<ul style="margin:0 0 12px 16px;padding:0;font-size:12px;line-height:1.6;">';
+    for (const p of highest) html += '<li><strong>' + p.a + ' / ' + p.b + '</strong>: ' + p.r.toFixed(2) + '</li>';
+    html += '</ul>';
+  }
+
+  if (lowest.length) {
+    html += '<div style="margin-bottom:6px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--neon-lime);">✓ LOWEST (good diversifiers)</div>';
+    html += '<ul style="margin:0 0 12px 16px;padding:0;font-size:12px;line-height:1.6;">';
+    for (const p of lowest) html += '<li><strong>' + p.a + ' / ' + p.b + '</strong>: ' + p.r.toFixed(2) + '</li>';
+    html += '</ul>';
+  }
+
+  html += '<div class="corr-wrap">';
+  html += '<table class="corr-grid"><thead><tr><th></th>';
+  for (const t of tickers) html += '<th>' + t + '</th>';
+  html += '</tr></thead><tbody>';
+  for (let i = 0; i < tickers.length; i++) {
+    html += '<tr><th class="row-h">' + tickers[i] + '</th>';
+    for (let j = 0; j < tickers.length; j++) {
+      const r = matrix[i][j];
+      if (r === null) { html += '<td style="color:var(--dim);">—</td>'; continue; }
+      const c = corrColor(r);
+      const display = i === j ? '1.0' : r.toFixed(2);
+      html += '<td style="background:' + c.bg + ';color:' + c.fg + ';">' + display + '</td>';
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  html += '</div>';
+
+  html += '<div class="corr-legend">';
+  html += '<span><span class="swatch" style="background:rgba(255,43,214,0.7);"></span>High positive (>0.5)</span>';
+  html += '<span><span class="swatch" style="background:rgba(255,43,214,0.3);"></span>Mild positive</span>';
+  html += '<span><span class="swatch" style="background:#1a1a2a;"></span>Near zero (ideal diversifier)</span>';
+  html += '<span><span class="swatch" style="background:rgba(170,255,0,0.3);"></span>Mild negative</span>';
+  html += '<span><span class="swatch" style="background:rgba(170,255,0,0.7);"></span>Strong negative (hedge)</span>';
+  html += '</div>';
+
+  modalBody.classList.remove('loading');
+  modalBody.innerHTML = html;
+  modalNewsList.innerHTML = '';
+}
+
+document.getElementById('openCorr').addEventListener('click', renderCorrelationModal);
 
 // ===== AI helpers =====
 const PICKS_SUMMARY = () => PICKS.map(p => {
@@ -1404,12 +2032,22 @@ async function newsCall(ticker) {
 }
 
 // ===== Daily brief (auto-load, 6h cache) =====
-// v2 cache key resets cache when ad-stripping / prompts change
-const BRIEF_CACHE_KEY = 'bw_daily_brief_v2';
+// v3 cache key resets cache when ad-stripping / prompts change
+const BRIEF_CACHE_KEY = 'bw_daily_brief_v3';
 const BRIEF_TTL = 6 * 60 * 60 * 1000; // 6 hours
 
-// Drop legacy cache from older builds (had ads / English responses)
-try { localStorage.removeItem('bw_daily_brief_v1'); } catch {}
+// Drop legacy caches from older builds (had ads / English responses)
+try {
+  localStorage.removeItem('bw_daily_brief_v1');
+  localStorage.removeItem('bw_daily_brief_v2');
+} catch {}
+
+// Detect if a (possibly cached) text contains Pollinations ad markers.
+// If it does, the cache is invalid and we refetch.
+function hasAdMarkers(text) {
+  if (!text) return false;
+  return /Support Pollinations|🌸\s*\*?\*?Ad\*?\*?\s*🌸|pollinations\.ai\/redirect|\[Support our mission\]|Powered by Pollinations/i.test(text);
+}
 
 async function loadDailyBrief(force = false) {
   const el = document.getElementById('commentary');
@@ -1419,10 +2057,15 @@ async function loadDailyBrief(force = false) {
     try {
       const cached = JSON.parse(localStorage.getItem(BRIEF_CACHE_KEY) || 'null');
       if (cached && (Date.now() - cached.t) < BRIEF_TTL) {
-        el.textContent = '> ' + cached.text;
-        el.classList.remove('loading');
-        refresh.textContent = '◆ CACHED ' + new Date(cached.t).toLocaleTimeString('hu-HU');
-        return;
+        // Reject ad-laden cached briefs
+        if (hasAdMarkers(cached.text)) {
+          localStorage.removeItem(BRIEF_CACHE_KEY);
+        } else {
+          el.textContent = '> ' + cached.text;
+          el.classList.remove('loading');
+          refresh.textContent = '◆ CACHED ' + new Date(cached.t).toLocaleTimeString('hu-HU');
+          return;
+        }
       }
     } catch {}
   }
@@ -1586,8 +2229,23 @@ document.getElementById('grid').addEventListener('click', (e) => {
   else if (btn.dataset.action === 'deepdive') showDeepDive(t);
 });
 
+// On init: paint with cached data if available
+paintSparklines();
+paintHeatmap();
+
 // Auto-load daily brief on page open
 setTimeout(() => loadDailyBrief(false), 400);
+
+// Refresh live data on page open (also after 15 min if user keeps tab open)
+setTimeout(refreshLiveData, 300);
+setInterval(refreshLiveData, 15 * 60 * 1000);
+
+// Re-paint on window resize (sparklines depend on offsetWidth)
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(paintSparklines, 200);
+});
 
 // Position Sizer logic
 function calculateSizing() {

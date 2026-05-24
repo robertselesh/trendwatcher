@@ -20,6 +20,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/yfinance"
+  to = "/.netlify/functions/yfinance"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/breakout-watchlist"
   to = "/index.html"
   status = 200
