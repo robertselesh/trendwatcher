@@ -236,6 +236,14 @@
   .card.t-industrial { --accent-color: var(--neon-lime); --accent-glow: rgba(170,255,0,0.12); }
   .card.t-defense { --accent-color: var(--neon-magenta); --accent-glow: rgba(255,43,214,0.12); }
   .card.t-crypto { --accent-color: var(--neon-orange); --accent-glow: rgba(255,140,0,0.12); }
+  .card.t-mega { --accent-color: #ffffff; --accent-glow: rgba(255,255,255,0.15); }
+  .card.t-semi { --accent-color: #5af7ff; --accent-glow: rgba(90,247,255,0.12); }
+  .card.t-saas { --accent-color: #a366ff; --accent-glow: rgba(163,102,255,0.14); }
+  .card.t-cyber { --accent-color: #ff0040; --accent-glow: rgba(255,0,64,0.14); }
+  .card.t-fintech { --accent-color: #00ff88; --accent-glow: rgba(0,255,136,0.12); }
+  .card.t-biotech { --accent-color: #ff5ec4; --accent-glow: rgba(255,94,196,0.14); }
+  .card.t-ev { --accent-color: #4ad8ff; --accent-glow: rgba(74,216,255,0.13); }
+  .card.t-emerging { --accent-color: #ffd700; --accent-glow: rgba(255,215,0,0.14); }
 
   .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
   .ticker {
@@ -680,10 +688,10 @@
   /* === Sector heat map === */
   .heatmap {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 6px;
     margin-bottom: 18px;
-    padding: 10px 12px;
+    padding: 14px 12px 10px;
     background: var(--panel);
     border: 1px solid var(--dim);
     position: relative;
@@ -714,6 +722,14 @@
   .heat-cell.t-industrial { --accent-color: var(--neon-lime); --accent-glow: rgba(170,255,0,0.18); }
   .heat-cell.t-defense { --accent-color: var(--neon-magenta); --accent-glow: rgba(255,43,214,0.18); }
   .heat-cell.t-crypto { --accent-color: var(--neon-orange); --accent-glow: rgba(255,140,0,0.18); }
+  .heat-cell.t-mega { --accent-color: #ffffff; --accent-glow: rgba(255,255,255,0.18); }
+  .heat-cell.t-semi { --accent-color: #5af7ff; --accent-glow: rgba(90,247,255,0.18); }
+  .heat-cell.t-saas { --accent-color: #a366ff; --accent-glow: rgba(163,102,255,0.2); }
+  .heat-cell.t-cyber { --accent-color: #ff0040; --accent-glow: rgba(255,0,64,0.2); }
+  .heat-cell.t-fintech { --accent-color: #00ff88; --accent-glow: rgba(0,255,136,0.18); }
+  .heat-cell.t-biotech { --accent-color: #ff5ec4; --accent-glow: rgba(255,94,196,0.2); }
+  .heat-cell.t-ev { --accent-color: #4ad8ff; --accent-glow: rgba(74,216,255,0.18); }
+  .heat-cell.t-emerging { --accent-color: #ffd700; --accent-glow: rgba(255,215,0,0.2); }
   .heat-label {
     font-size: 10px;
     letter-spacing: 0.1em;
@@ -958,7 +974,7 @@
 <header>
   <h1>Breakout.Watchlist</h1>
   <div class="sub">
-    <span class="pulse-dot"></span>LIVE_FEED · 2026.05.23 · <span class="tag">30 nodes</span> · <span class="tag">5 sectors</span> · <span class="tag">6-18m horizon</span>
+    <span class="pulse-dot"></span>LIVE_FEED · 2026.05.24 · <span class="tag">62 nodes</span> · <span class="tag">13 sectors</span> · <span class="tag">6-18m horizon</span>
   </div>
 </header>
 
@@ -985,11 +1001,19 @@
 
 <!-- Sector heat map -->
 <section class="heatmap" id="heatmap">
-  <div class="heat-cell t-infra" data-theme="infra"><div class="heat-label">AI_INFRA</div><div class="heat-value flat" data-v="ai_infra">—</div><div class="heat-count" data-c="ai_infra"></div></div>
-  <div class="heat-cell t-energy" data-theme="energy"><div class="heat-label">AI_ENERGY</div><div class="heat-value flat" data-v="ai_energy">—</div><div class="heat-count" data-c="ai_energy"></div></div>
+  <div class="heat-cell t-mega" data-theme="mega"><div class="heat-label">MEGA_CAP</div><div class="heat-value flat" data-v="mega">—</div><div class="heat-count" data-c="mega"></div></div>
+  <div class="heat-cell t-infra" data-theme="infra"><div class="heat-label">AI_INFRA</div><div class="heat-value flat" data-v="infra">—</div><div class="heat-count" data-c="infra"></div></div>
+  <div class="heat-cell t-semi" data-theme="semi"><div class="heat-label">SEMI</div><div class="heat-value flat" data-v="semi">—</div><div class="heat-count" data-c="semi"></div></div>
+  <div class="heat-cell t-energy" data-theme="energy"><div class="heat-label">AI_ENERGY</div><div class="heat-value flat" data-v="energy">—</div><div class="heat-count" data-c="energy"></div></div>
+  <div class="heat-cell t-saas" data-theme="saas"><div class="heat-label">CLOUD_SAAS</div><div class="heat-value flat" data-v="saas">—</div><div class="heat-count" data-c="saas"></div></div>
+  <div class="heat-cell t-cyber" data-theme="cyber"><div class="heat-label">CYBER</div><div class="heat-value flat" data-v="cyber">—</div><div class="heat-count" data-c="cyber"></div></div>
+  <div class="heat-cell t-fintech" data-theme="fintech"><div class="heat-label">FINTECH</div><div class="heat-value flat" data-v="fintech">—</div><div class="heat-count" data-c="fintech"></div></div>
+  <div class="heat-cell t-biotech" data-theme="biotech"><div class="heat-label">BIOTECH</div><div class="heat-value flat" data-v="biotech">—</div><div class="heat-count" data-c="biotech"></div></div>
   <div class="heat-cell t-industrial" data-theme="industrial"><div class="heat-label">INDUSTRIAL</div><div class="heat-value flat" data-v="industrial">—</div><div class="heat-count" data-c="industrial"></div></div>
   <div class="heat-cell t-defense" data-theme="defense"><div class="heat-label">DEFENSE</div><div class="heat-value flat" data-v="defense">—</div><div class="heat-count" data-c="defense"></div></div>
+  <div class="heat-cell t-ev" data-theme="ev"><div class="heat-label">EV_MOBILITY</div><div class="heat-value flat" data-v="ev">—</div><div class="heat-count" data-c="ev"></div></div>
   <div class="heat-cell t-crypto" data-theme="crypto"><div class="heat-label">CRYPTO</div><div class="heat-value flat" data-v="crypto">—</div><div class="heat-count" data-c="crypto"></div></div>
+  <div class="heat-cell t-emerging" data-theme="emerging"><div class="heat-label">EMERGING</div><div class="heat-value flat" data-v="emerging">—</div><div class="heat-count" data-c="emerging"></div></div>
   <div class="heatmap-actions">
     <span>SCOPE://</span>
     <button class="btn-corr" id="openCorr">▶ CORRELATION_MATRIX</button>
@@ -1029,11 +1053,19 @@
 <div class="toolbar">
   <span class="toolbar-label">SECTOR://</span>
   <button class="chip active" data-theme="all">ALL</button>
+  <button class="chip" data-theme="mega">MEGA_CAP</button>
   <button class="chip" data-theme="infra">AI_INFRA</button>
+  <button class="chip" data-theme="semi">SEMI</button>
   <button class="chip" data-theme="energy">AI_ENERGY</button>
+  <button class="chip" data-theme="saas">CLOUD_SAAS</button>
+  <button class="chip" data-theme="cyber">CYBER</button>
+  <button class="chip" data-theme="fintech">FINTECH</button>
+  <button class="chip" data-theme="biotech">BIOTECH</button>
   <button class="chip" data-theme="industrial">INDUSTRIAL</button>
   <button class="chip" data-theme="defense">DEFENSE</button>
+  <button class="chip" data-theme="ev">EV_MOBILITY</button>
   <button class="chip" data-theme="crypto">CRYPTO</button>
+  <button class="chip" data-theme="emerging">EMERGING</button>
   <span class="spacer"></span>
   <button class="chip" id="watchlistOnly">★ FAV_ONLY</button>
   <select class="chip" id="sortSel">
@@ -1293,6 +1325,279 @@ const PICKS = [
     thesis: "Legnagyobb publikus BTC bányász. Még nem pivotált AI/HPC-re mint CIFR/WULF, de a kapacitás (~50 EH/s) és energy infrastruktúra ott van. Ha BTC tovább tart $100k+ fölött, cash flow generál; ha pivotálnak, multiple-rerate jöhet.",
     catalysts: ["AI/HPC pivot bejelentés (követheti CIFR/WULF mintáját)", "BTC árfolyam $120k+ áttörés", "Stratégiai overhead csökkentés"],
     risks: ["BTC halving + bearmarket = direkt cash flow puhulás", "Dilution history aktív (gyakori secondary offering)", "Még nem pivotált — opcionalitás vs valószínűség"]
+  },
+
+  // ===== MEGA_CAP (5) =====
+  {
+    ticker: "NVDA", name: "NVIDIA", theme: "mega",
+    themeLabel: "MEGA_CAP::AI_Kingmaker", mcap: "~$3.5T", mcapNum: 3500,
+    conviction: 5, risk: "med",
+    thesis: "AI infrastruktúra de facto monopóliuma — H100/H200/B200/B300 + CUDA + NVLink ökoszisztéma. Hyperscaler capex 2026-ban ~$600B-ra emelkedik, és NVDA marad a default vásárló (>80% share). Networking (Mellanox) és software (NIM, Omniverse) bevétel gyorsan skálázódik a hardver mellett.",
+    catalysts: ["Blackwell teljes ramp + Rubin GPU 2026 H2 reveal", "Hyperscaler capex tovább emelkedik (META, GOOG, MSFT, AMZN)", "Sovereign AI deals (Szaúdi, EAE, India)", "Robotics + automotive (Drive Thor) új vertikálok"],
+    risks: ["Hyperscaler in-house custom chip-ek (Trainium, TPU, MTIA) gyorsabb share-gain", "Geopolitikai chip-export tilalom Kínára", "AI capex normalizálás 2027-ben ha ROI lassú"]
+  },
+  {
+    ticker: "GOOGL", name: "Alphabet", theme: "mega",
+    themeLabel: "MEGA_CAP::Search+Cloud+AI", mcap: "~$2.1T", mcapNum: 2100,
+    conviction: 5, risk: "low",
+    thesis: "Multiple expansion thesis: search monopólium még él (Gemini integráció), Cloud +35% YoY gyorsul (3rd hyperscaler), Waymo most már komoly autonomy vertical, és YouTube ad-monetization rekord. Antitrust risk árazva, fwd P/E ~21 a legolcsóbb Mag-7-ben.",
+    catalysts: ["Gemini 3 launch + agentic AI capabilities", "Waymo expansion (LA, SF skálázás, OEM partnership)", "TPU pod-ok 3rd party adoption (Anthropic, Apple)", "Search ad-revenue rezilíencia Q-ról Q-ra"],
+    risks: ["Antitrust remediation (search deal Apple-lel)", "ChatGPT/Perplexity zero-click search share-loss", "Capex spike rontja FCF konverziót"]
+  },
+  {
+    ticker: "MSFT", name: "Microsoft", theme: "mega",
+    themeLabel: "MEGA_CAP::Cloud+Copilot", mcap: "~$3.2T", mcapNum: 3200,
+    conviction: 5, risk: "low",
+    thesis: "Azure +33% YoY (AI-driven), Copilot enterprise penetration most gyorsul ($30/user/hó), OpenAI partnership 49% gazdasági stake + first-party model use. Office 365 + Dynamics + GitHub - mindenhol AI premium tier. Stabil compounder + AI optionality.",
+    catalysts: ["Azure AI revenue $50B+ 2026 run-rate", "Copilot seat-count gyorsulás Fortune 500-ban", "OpenAI IPO valamilyen formában (stake értékelés)", "Quantum: Majorana 1 progress"],
+    risks: ["OpenAI partnership renegotiation", "Capex túl gyors növekedés (FCF margin nyomás)", "On-prem→cloud átállás telítődik"]
+  },
+  {
+    ticker: "META", name: "Meta Platforms", theme: "mega",
+    themeLabel: "MEGA_CAP::AI+Ads", mcap: "~$1.6T", mcapNum: 1600,
+    conviction: 5, risk: "med",
+    thesis: "Az AI legjobb monetizáció story-ja: Reels engagement + Andromeda ad-targeting jobban használja LLM-eket mint bárki más → CPC +10%+ ad-yield. Llama 4 open-source moat. Reality Labs még pénzt éget de Ray-Ban + Quest 3 +AI glass roadmap valós upside.",
+    catalysts: ["Llama 4 + agentic AI release", "Ad-revenue $200B+ 2026 (CPC + impression both up)", "Ray-Ban Meta Glasses skálázás 2-3M units 2026", "Threads monetization indul"],
+    risks: ["AI capex $80B+/év (FCF impact)", "TikTok ban visszafordul → engagement nyomás", "Antitrust: Instagram/WhatsApp divestiture risk (2026 H2 vége)"]
+  },
+  {
+    ticker: "AMZN", name: "Amazon", theme: "mega",
+    themeLabel: "MEGA_CAP::AWS+Retail+Ads", mcap: "~$2.4T", mcapNum: 2400,
+    conviction: 4, risk: "low",
+    thesis: "AWS +20% YoY (Trainium2 + Bedrock + Anthropic deal), Ads $60B+ run-rate (margin engine), Retail margin expansion (robotika, fulfillment). Bedrock multi-model platform = 'AI Switzerland' angle. 3 érték-skálázó motor egy company-ban.",
+    catalysts: ["AWS AI revenue $20B+ run-rate (Anthropic Claude felhajtó)", "Project Kuiper kommersz launch 2026", "Robot fleet expansion warehouse-okban (250k+ robot)", "Ads tovább +20%+ YoY"],
+    risks: ["AWS share-erodálás Azure-tól és GCP-től", "Retail margin nyomás (verseny + munkaerő)", "Anthropic dependency túl nagy a Bedrock-on"]
+  },
+
+  // ===== SEMI_CYCLE (4) =====
+  {
+    ticker: "AMD", name: "Advanced Micro Devices", theme: "semi",
+    themeLabel: "SEMI::GPU_Underdog", mcap: "~$220B", mcapNum: 220,
+    conviction: 4, risk: "med",
+    thesis: "AI GPU runner-up — MI300X + MI325X + MI355X (2H2025) skálázódik a hyperscalerek között (MSFT, Meta, OCI). EPYC server CPU share-gain az Intel-től tovább nő. Ha még csak ~5% AI GPU market share-t fog el, az is $30B+ AI revenue 2027-re.",
+    catalysts: ["MI400 launch 2026 Q3 (Rubin-konkurens)", "Hyperscaler customer diverzifikáció (most Meta + MSFT a vezetők)", "Sony PS6 chip win", "Xilinx (adaptive computing) érettsége"],
+    risks: ["NVDA technológiai lead nem zár (CUDA moat)", "Hyperscaler in-house chip prioritás", "Margin nyomás MI-platform skálázódáson"]
+  },
+  {
+    ticker: "TSM", name: "Taiwan Semiconductor", theme: "semi",
+    themeLabel: "SEMI::Foundry_Monopoly", mcap: "~$1.1T", mcapNum: 1100,
+    conviction: 5, risk: "med",
+    thesis: "Az egyetlen leading-edge foundry — 3nm már termel, 2nm 2026 H2, A16 (1.6nm) 2026/2027. Minden hyperscaler chipje (NVDA, AMD, AAPL, GOOGL TPU, AMZN Trainium) itt készül. CoWoS advanced packaging kapacitás $30B+ capex. Geopolitikai diszkont árazva.",
+    catalysts: ["3nm capacity bővítés és margin javulás 50%+ GP-re", "2nm trial production 2026 H1", "Arizona Fab 21+22 működésbe lép", "AI accelerator revenue +50% YoY"],
+    risks: ["Tajvan-Kína katonai feszültség (worst-case scenario)", "Customer concentration: Apple + NVDA ~40% revenue", "ASML EUV gép-bottleneck"]
+  },
+  {
+    ticker: "ASML", name: "ASML Holding", theme: "semi",
+    themeLabel: "SEMI::EUV_Monopoly", mcap: "~$280B", mcapNum: 280,
+    conviction: 5, risk: "med",
+    thesis: "EUV litografia monopóliuma — az ÖSSZES leading-edge chip ezen a gépen készül. High-NA EUV 2026 ramp ($350M+/gép, csak ASML csinálja). 2024 China-overshipping miatti 2025 normalizálás után 2026 H2 booking + 2027 backlog tisztul.",
+    catalysts: ["High-NA EUV első kommersz lemezek 2026 H2 (TSM, Intel, SK)", "Memory recovery → DRAM EUV demand", "China license enyhülés esetén booking jump", "FY27 €40B+ revenue guidance"],
+    risks: ["Geopolitikai EUV export tilalom Kína teljesen", "Bookings 2026 H1 lassú ramp", "Magas P/E (~32) sebezhető rezsim-váltásra"]
+  },
+  {
+    ticker: "MU", name: "Micron Technology", theme: "semi",
+    themeLabel: "SEMI::HBM_Memory", mcap: "~$120B", mcapNum: 120,
+    conviction: 4, risk: "high",
+    thesis: "HBM3E/HBM4 memóriacycle play — NVIDIA Blackwell és Rubin GPU-k MU HBM-et használnak (Samsung kiesett HBM3E qual-tól). DRAM ciklus 2025-2026-ban tetőzik, +50% pricing YoY. Free cash flow most fordul pozitívra 2 év veszteség után.",
+    catalysts: ["HBM3E 12-Hi qual + HBM4 sample 2026 Q2", "NAND pricing recovery", "Datacenter SSD market share gain (vs SK Hynix)", "FY26 EPS $14+ konszenzus"],
+    risks: ["Memory ciklus rotates negatívra 2027-ben", "Samsung HBM4 catch-up", "China memory subsidies (CXMT, YMTC)"]
+  },
+
+  // ===== CLOUD_SAAS (4) =====
+  {
+    ticker: "SNOW", name: "Snowflake", theme: "saas",
+    themeLabel: "SAAS::Data_Cloud", mcap: "~$60B", mcapNum: 60,
+    conviction: 4, risk: "med",
+    thesis: "Data warehouse + Cortex AI (built-in LLM) — minden enterprise AI use case ráadásul Snowflake data-n alapszik. NRR ~127% még mindig, customer count gyorsul, Iceberg + Snowpark Container Services unlock új workload-okat. Margin javulás stabil.",
+    catalysts: ["Cortex Search + Analyst GA 2026 H1", "Hyperscaler integráció (BedRock, Azure AI Studio)", "Iceberg open-format adoption miatt customer expansion", "Sridhar Ramaswamy CEO új momentum"],
+    risks: ["Databricks verseny gyors (most majdnem azonos méretű)", "Margin nyomás GPU/compute költségek miatt", "Stock-based comp magas (~40% revenue)"]
+  },
+  {
+    ticker: "DDOG", name: "Datadog", theme: "saas",
+    themeLabel: "SAAS::Observability", mcap: "~$50B", mcapNum: 50,
+    conviction: 4, risk: "med",
+    thesis: "Observability + APM + security all-in-one platform. AI-driven Bits AI agent felhasználói munkát automatizál → seat-multiplier. Customer NRR 115%+, new customers in AI-native szegmensben (LLM monitoring big TAM). Profit margin most expandál.",
+    catalysts: ["Bits AI agent enterprise GA", "Cloud Security expansion (versus CRWD platform)", "Logs + APM unification deals (>1M ARR customer)", "FY26 revenue $4B+ run-rate"],
+    risks: ["Top customer (OpenAI) optimization round = revenue concentration", "Verseny Microsoft Sentinel + Grafana-tól", "Magas SBC dilution"]
+  },
+  {
+    ticker: "NOW", name: "ServiceNow", theme: "saas",
+    themeLabel: "SAAS::Workflow_AI", mcap: "~$240B", mcapNum: 240,
+    conviction: 4, risk: "low",
+    thesis: "Enterprise workflow platform — IT service management de már HR, finance, customer service is. Now Assist (AI copilot) per-seat premium $25/hó beragad CIO budget-be. Government deals stabilizálnak, Federal vertical erős.",
+    catalysts: ["Now Assist deal-szám +200%+ YoY", "Government federal AI mandátum (FedRAMP High)", "Pure Storage + Cisco partnership integrációk", "FY26 subscription $13B+"]
+,
+    risks: ["Magas P/E (~55) sebezhető deceleration-re", "GenAI verseny: Microsoft Copilot azonos use case", "Magas insider selling 2025-ben"]
+  },
+  {
+    ticker: "NET", name: "Cloudflare", theme: "saas",
+    themeLabel: "SAAS::Edge_AI", mcap: "~$45B", mcapNum: 45,
+    conviction: 4, risk: "med",
+    thesis: "Edge compute + zero-trust + Workers AI (inference at edge). Workers AI runs Llama/Mistral közvetlenül a CDN edge-en — közelebbi, olcsóbb mint hyperscaler. R2 storage = no-egress S3 challenger. Customer >$5M ARR cohort +50% YoY.",
+    catalysts: ["Workers AI revenue inflection 2026 H1", "R2 + D1 (SQLite) developer momentum", "AI Gateway agentic infra", "Enterprise customer count >2,500 from 1,800"],
+    risks: ["Magas P/E (~70) sebezhető capex round-okra", "Hyperscaler edge competition (CloudFront, Front Door)", "Margin transition GP <80% short-term"]
+  },
+
+  // ===== CYBER (4) =====
+  {
+    ticker: "PANW", name: "Palo Alto Networks", theme: "cyber",
+    themeLabel: "CYBER::Platform_Leader", mcap: "~$120B", mcapNum: 120,
+    conviction: 5, risk: "low",
+    thesis: "Cybersecurity platformosodás vezetője — Prisma Cloud + Cortex XSIAM + Strata firewall egy single platform-on. Platformization stratégia: Q3 FY25 ARR +37% YoY. AI-driven SOC automatizálás (XSIAM) helyettesíti a SIEM-eket (Splunk killer). Most a 4. mind hyperscaler-ek partnere.",
+    catalysts: ["XSIAM 2.0 + agentic SOC autonomy 2026", "$15B NGS-ARR target eléri", "Federal AI security mandátum", "M&A: data security ostro vagy email vertical"],
+    risks: ["CRWD versenynyomás endpoint segment-en", "Free product giveaways (platformization) rövidtávú margin nyomás", "FY28 cél $15B ARR mérföldkő-szigorúság"]
+  },
+  {
+    ticker: "CRWD", name: "CrowdStrike", theme: "cyber",
+    themeLabel: "CYBER::EDR_Leader", mcap: "~$95B", mcapNum: 95,
+    conviction: 4, risk: "med",
+    thesis: "Cloud-native EDR + XDR platform. Falcon Charlotte AI agentic SOC. 2024 outage post-mortem után customer retention 95%+ visszaállt és Falcon Flex (subscription elasticity) gyorsít new logos-t. Identity + cloud security expansion fast.",
+    catalysts: ["Charlotte AI agentic features GA 2026 Q2", "Falcon Cloud Security $1B ARR milestone", "ARR növekedés visszatér +28%+ YoY", "Government customer rebuild"],
+    risks: ["MSFT Defender + Sentinel free bundling", "Outage scar még él (govt RFP-knél megjelenik)", "PANW XSIAM SOC competition"]
+  },
+  {
+    ticker: "ZS", name: "Zscaler", theme: "cyber",
+    themeLabel: "CYBER::Zero_Trust", mcap: "~$32B", mcapNum: 32,
+    conviction: 4, risk: "med",
+    thesis: "Zero-trust SASE (Secure Access Service Edge) — VPN halála = ZS bull case. Zenith Live + Risk360 + ZDX vendor consolidation. Government + EU NIS2 compliance driver. Magas margin (75% GP), erős FCF konverzió. Magas growth stage-ben még újra.",
+    catalysts: ["AI agent traffic + LLM gateway új revenue stream", "Federal customer count +40% YoY", "Risk360 + DLP cross-sell", "AT&T (channel partner) deal expansion"],
+    risks: ["Microsoft Entra + Defender bundling lock-in", "Magas CAC payback miatt FCF margin lassul", "DevOps tool-chain saturation"]
+  },
+  {
+    ticker: "FTNT", name: "Fortinet", theme: "cyber",
+    themeLabel: "CYBER::Network_Sec", mcap: "~$80B", mcapNum: 80,
+    conviction: 3, risk: "low",
+    thesis: "Firewall hardware + secure SD-WAN piacvezető. Custom ASIC alapú teljesítmény = árazási előny. OT (operational tech) security niche (gyárak, energy). Cloud security catch-up még folyamatban. Stabil cash flow generator, dividend nincs (még).",
+    catalysts: ["Firewall refresh cycle 2026-2027 (5 év után)", "OT/IoT security growth (NIS2, EU)", "SASE bundle pricing aggressive", "Buyback acceleration"],
+    risks: ["Cloud security adoption lassú vs PANW/ZS", "Hardware-dependent revenue lassú compounder", "GP margin downside ha ASIC supply tightening"]
+  },
+
+  // ===== FINTECH (4) =====
+  {
+    ticker: "COIN", name: "Coinbase", theme: "fintech",
+    themeLabel: "FINTECH::Crypto_Rails", mcap: "~$70B", mcapNum: 70,
+    conviction: 4, risk: "high",
+    thesis: "Crypto exchange piacvezetője a US-ben. Trump-admin friendly regulation (SAB121 visszavonva, stablecoin bill, BTC strategic reserve). Trading fees + Custody + Subscription (USDC interest sharing Circle-rel) = három revenue motor. Base L2 chain user adoption + onchain economy.",
+    catalysts: ["Stablecoin legisláció = USDC interest revenue boom", "Spot ETH staking ETF approval", "Bitwise/Grayscale ETF custody monopólium", "Base TVL skálázás"],
+    risks: ["BTC bear market direct hit on trading volume", "Hood + IBKR retail commission compression", "Tokenizációs marketplace verseny (Robinhood, Kraken)"]
+  },
+  {
+    ticker: "HOOD", name: "Robinhood", theme: "fintech",
+    themeLabel: "FINTECH::Retail_Trading", mcap: "~$55B", mcapNum: 55,
+    conviction: 4, risk: "high",
+    thesis: "Retail trading + crypto + futures + prediction markets + tokenization platform. Gold subscription growth (60% YoY) + retirement transfer-ek. Tokenized US equity offering EU-ban → US is jönni fog ha legisláció engedi. Most a legdinamikusabb fintech.",
+    catalysts: ["Bitstamp acquisition integration", "Prediction markets (Kalshi-style) growth", "Tokenized equity offering US rollout", "Robinhood Strategies (RIA) AUM gyorsulás"],
+    risks: ["Crypto volume drop a fő revenue source-on", "Regulatory backlash a tokenized securities-en", "Margin compression retirement vertical-ban"]
+  },
+  {
+    ticker: "SOFI", name: "SoFi Technologies", theme: "fintech",
+    themeLabel: "FINTECH::Digital_Bank", mcap: "~$25B", mcapNum: 25,
+    conviction: 4, risk: "med",
+    thesis: "Digital bank charter (2022 óta) + Galileo (BaaS API) + Technisys (core banking). Member growth +35% YoY, cross-sell ratio javul. Student loan refi recovery ha rates csökkennek. Profitábilis lett 2024-ben, EPS gyorsulás 2026-ra.",
+    catalysts: ["Personal loan + home equity loan growth", "Galileo: BaaS revenue +40%+ YoY", "Student loan refi rate cuts mellett", "Q4 2026 EPS $0.50+ konszenzus"],
+    risks: ["Credit quality romlás recesszió esetén", "Banking deposit compression rate-environment-ben", "Marketing spend ROI scaling"]
+  },
+  {
+    ticker: "V", name: "Visa", theme: "fintech",
+    themeLabel: "FINTECH::Payment_Network", mcap: "~$650B", mcapNum: 650,
+    conviction: 4, risk: "low",
+    thesis: "Globális payment network monopólium. Cross-border travel volume rebound, Visa Direct (B2B + push payments) gyorsuló. Token services + stablecoin-pay rails opcionalitás. Tagstőke + share buyback. AI agent payment infrastructure long-term opportunity.",
+    catalysts: ["Visa Direct B2B revenue $10B+ ARR", "Stablecoin partnership (USDC) integráció", "Travel volume Asia-rebound", "AI agent commerce protocol Visa-vezetésű"],
+    risks: ["Stablecoin disintermediation a long-term", "Antitrust merchant lawsuit (interchange fees)", "Cross-border volume sensitivity geopolitika-érzékeny"]
+  },
+
+  // ===== BIOTECH (4) =====
+  {
+    ticker: "LLY", name: "Eli Lilly", theme: "biotech",
+    themeLabel: "BIOTECH::GLP1_Leader", mcap: "~$700B", mcapNum: 700,
+    conviction: 5, risk: "med",
+    thesis: "GLP-1 piacvezető — Mounjaro (T2D) + Zepbound (obesity) duopóliumban Novo-val. Orforglipron (oral GLP-1) Phase III 2025 H2 readout + 2026 launch = oral form ad új TAM. Retatrutide (triple agonist) jobb hatékonyság mint semaglutide. Cardiovascular outcome trial eredmények pozitívak.",
+    catalysts: ["Orforglipron FDA approval 2026 H1 (oral pill)", "Retatrutide Phase III adata Type 2 diab + obesity", "Donanemab Alzheimer expansion", "Capex normalizálódik 2026-ban → margin expansion"],
+    risks: ["Insurance coverage push-back generic semaglutide-ra (NVO loses patent 2032)", "GLP-1 manufacturing kapacitás bottleneck", "Trump-admin healthcare policy IRA negotiation"]
+  },
+  {
+    ticker: "VRTX", name: "Vertex Pharmaceuticals", theme: "biotech",
+    themeLabel: "BIOTECH::CF+Pain", mcap: "~$120B", mcapNum: 120,
+    conviction: 5, risk: "low",
+    thesis: "Cystic fibrosis monopólium (Trikafta) cash cow. Suzetrigine (Journavx) — non-opioid pain killer, FDA approved Jan 2025, sokmilliárdos opioid replacement TAM. Casgevy gene therapy (CRISPR) sickle cell skálázódik. Diversifikálódik a CF-ről - de mind defensible asset.",
+    catalysts: ["Suzetrigine peripheral diabetic neuropathy P3 readout 2026 H1", "Casgevy expansion (beta-thalassemia)", "Vanzacaftor (next-gen CF) launch", "Inaxaplin (kidney disease) Phase III"],
+    risks: ["CF franchise erosion 2030+", "Suzetrigine launch uptake under expectations", "Pricing pressure non-opioid space-ben"]
+  },
+  {
+    ticker: "REGN", name: "Regeneron", theme: "biotech",
+    themeLabel: "BIOTECH::Biologics", mcap: "~$80B", mcapNum: 80,
+    conviction: 3, risk: "med",
+    thesis: "Eylea (wet AMD) cash cow most már biosimilar nyomás alatt, de Eylea HD (high-dose) tartja a franchise-t. Dupixent (Sanofi-partnerséggel) atópiás dermatitis, asthma, COPD még gyorsan nő. Pipeline: trap molekulák + REGN5458 (myeloma), Libtayo (oncology).",
+    catalysts: ["Eylea HD market share recovery", "Linvoseltamab myeloma approval extension", "Itepekimab COPD Phase III", "Pipeline diverzifikáció Eyleat-en túl"],
+    risks: ["Eylea biosimilar penetration faster than expected", "Dupixent: Sanofi terápiás area expansion competition", "Cash flow re-investment uncertainty"]
+  },
+  {
+    ticker: "MRNA", name: "Moderna", theme: "biotech",
+    themeLabel: "BIOTECH::mRNA_Platform", mcap: "~$15B", mcapNum: 15,
+    conviction: 3, risk: "high",
+    thesis: "mRNA platform deep value play (post-COVID crash, $440 → $30). RSV vaccine approval 2024, flu vaccine launch 2026, cancer vaccine (mRNA-4157 personalised neoantigen melanoma + lung) Phase III readout. Cash burn de elfogadható ($4B cash még). Multi-product platform potential.",
+    catalysts: ["mRNA-4157 (Merck collab) Phase III melanoma readout 2026", "Flu vaccine FDA approval + launch", "CMV (cytomegalovirus) vaccine Phase III", "Cost cutting → cash burn megfékezi"],
+    risks: ["COVID franchise revenue tovább csökken", "Cash burn rate vs runway 2027 H2", "Cancer vaccine timeline csúszás"]
+  },
+
+  // ===== EV_MOBILITY (3) =====
+  {
+    ticker: "TSLA", name: "Tesla", theme: "ev",
+    themeLabel: "EV::Robotaxi+Optimus", mcap: "~$1.4T", mcapNum: 1400,
+    conviction: 4, risk: "high",
+    thesis: "EV piacvezető + autonomy + humanoid (Optimus) + energy storage triple-bet. Robotaxi service launch Austin → expanding. FSD v13/v14 unsupervised egyre képesebb. Energy storage business (Megapack) profitábilis +50% YoY. Cybercab production 2026, Optimus production 2026 H2.",
+    catalysts: ["Robotaxi service expansion US (10+ city 2026)", "Cybercab production launch", "Optimus humanoid commercial release", "Affordable model launch ($25k)"],
+    risks: ["EV margin nyomás China BYD/Xiaomi versenyben", "FSD regulatory pushback (NHTSA)", "Musk attention divided politikai szerepkörrel"]
+  },
+  {
+    ticker: "RIVN", name: "Rivian Automotive", theme: "ev",
+    themeLabel: "EV::R2_Launch", mcap: "~$15B", mcapNum: 15,
+    conviction: 3, risk: "high",
+    thesis: "R2 platform launch 2026 H1 — $45k mid-size SUV, mass market target. Volkswagen JV $5.8B funding stabilizálja a balance sheet-et. Amazon delivery van fleet expansion. Software/architecture platformot lehet licencelni más OEM-eknek.",
+    catalysts: ["R2 production ramp 2026 H1 (Normal, IL gyár)", "VW JV scaling EREV platform 2027", "Amazon EDV fleet növelés", "FCF break-even 2027 H1 cél"],
+    risks: ["R2 launch késés (Rivian R1 launch késett)", "Cash runway 2027-ig — capital raise risk", "EV demand environment puhul"]
+  },
+  {
+    ticker: "QS", name: "QuantumScape", theme: "ev",
+    themeLabel: "EV::Solid_State_Battery", mcap: "~$3B", mcapNum: 3,
+    conviction: 2, risk: "high",
+    thesis: "Solid-state lithium-metal battery (PowerCo VW partnership). Pre-revenue speculation: ha kommercializál, 800Wh/L energy density + 15min fast charge = game changer. 2026-ban sample shipments OEM-eknek. Magas risk/reward binary trade.",
+    catalysts: ["VW PowerCo first cells QSE-5 sample delivery 2026", "Second commercialization partner (Honda, BMW)", "Cell testing under harsh conditions validation", "Cash runway > 2027 H2"],
+    risks: ["Manufacturing scale-up technically still unproven", "Cash burn vs runway 2027 H1", "OEM internalize solid-state R&D"]
+  },
+
+  // ===== EMERGING (4) =====
+  {
+    ticker: "PLTR", name: "Palantir", theme: "emerging",
+    themeLabel: "EMERGING::Gov+Comm_AI", mcap: "~$170B", mcapNum: 170,
+    conviction: 5, risk: "high",
+    thesis: "Government AI platformosodás vezetője (Maven Smart System, TITAN, Project Maven). Commercial AIP (Artificial Intelligence Platform) bootcamp model elhúzta deal close időt. Q1 25 US commercial +71% YoY. Magas FCF margin (~40%). Trump-admin friendly defense AI.",
+    catalysts: ["NATO AI platform deal (Q2 26+)", "Boot camp → multi-million ACV conversion gyorsít", "Apollo deployment standardizál", "Foundry expansion EU (post EU AI Act)"],
+    risks: ["Magas valuation (P/S ~70) sebezhető", "Government revenue concentration (US DoD)", "Q2 commercial growth deceleration"]
+  },
+  {
+    ticker: "IONQ", name: "IonQ", theme: "emerging",
+    themeLabel: "EMERGING::Quantum", mcap: "~$8B", mcapNum: 8,
+    conviction: 2, risk: "high",
+    thesis: "Trapped-ion quantum computing piacvezetője. Algorithmic qubits (AQ#) skálázódik: Forte (29 AQ) → Tempo (64 AQ) → 2030: 2M qubit. Government + cloud (Azure, AWS Braket, GCP) revenue stable. Speculatív 5-7 év előretekintő play.",
+    catalysts: ["Tempo commercial launch 2026", "Government quantum advantage demo", "Cloud partnership expansion (Anthropic, OpenAI)", "Acquisitions: Qubitekk + ID Quantique"],
+    risks: ["Quantum advantage timeline 5+ év", "Capex burn vs $1B+ cash erodes", "IBM/Google/Microsoft scaling faster"]
+  },
+  {
+    ticker: "RGTI", name: "Rigetti Computing", theme: "emerging",
+    themeLabel: "EMERGING::Quantum_SC", mcap: "~$3B", mcapNum: 3,
+    conviction: 2, risk: "high",
+    thesis: "Superconducting quantum computing — Ankaa-3 (84 qubit) + 2026: 100+ qubit chip. Modular architecture (multiple chiplet) lehetőséget ad gyors skálázásra. Government + university research customers. Magas binary risk de fundamental tech megvan.",
+    catalysts: ["Ankaa-3 commercial revenue ramp", "DARPA Quantum Benchmarking program", "Modular chip 336-qubit system 2026", "Cash raise success (no dilution panic)"],
+    risks: ["Cash burn (runway 2027 Q2)", "IonQ trapped-ion technological win out", "Magas dilution history"]
+  },
+  {
+    ticker: "ASTS", name: "AST SpaceMobile", theme: "emerging",
+    themeLabel: "EMERGING::Space_5G", mcap: "~$10B", mcapNum: 10,
+    conviction: 3, risk: "high",
+    thesis: "Space-based 5G direct-to-cell — standard okostelefon közvetlenül a műholdhoz csatlakozik. AT&T + Verizon + Vodafone partnership. 2026-ban első kommersz service launch US-ben. Globális TAM óriási (2.6B fő unconnected smartphone-okkal).",
+    catalysts: ["BlueBird Block 2 launch 2026 Q1-Q2", "FCC commercial service authorization", "AT&T/Verizon commercial integration", "Government contract (BBVA, DoD)"],
+    risks: ["Starlink direct-to-cell (T-Mobile) verseny", "Launch delay (SpaceX-dependency)", "Cash burn until commercial revenue 2026 H2"]
   }
 ];
 
@@ -1361,7 +1666,55 @@ const SCENARIOS = {
   RKLB: { price: 135.76, bull: 220, base: 165, bear: 90, probs: [35, 45, 20] },
   LDOS: { price: 165, bull: 220, base: 195, bear: 130, probs: [25, 60, 15] },
   TEM: { price: 65, bull: 120, base: 80, bear: 35, probs: [25, 50, 25] },
-  MARA: { price: 18, bull: 38, base: 22, bear: 9, probs: [25, 45, 30] }
+  MARA: { price: 18, bull: 38, base: 22, bear: 9, probs: [25, 45, 30] },
+
+  // ===== MEGA_CAP =====
+  NVDA: { price: 140, bull: 240, base: 180, bear: 95, probs: [40, 45, 15] },
+  GOOGL: { price: 175, bull: 260, base: 215, bear: 135, probs: [35, 50, 15] },
+  MSFT: { price: 425, bull: 580, base: 500, bear: 360, probs: [30, 55, 15] },
+  META: { price: 590, bull: 850, base: 720, bear: 450, probs: [35, 45, 20] },
+  AMZN: { price: 215, bull: 320, base: 265, bear: 165, probs: [30, 55, 15] },
+
+  // ===== SEMI_CYCLE =====
+  AMD: { price: 135, bull: 260, base: 190, bear: 90, probs: [30, 45, 25] },
+  TSM: { price: 200, bull: 320, base: 260, bear: 155, probs: [35, 50, 15] },
+  ASML: { price: 720, bull: 1100, base: 900, bear: 550, probs: [30, 50, 20] },
+  MU: { price: 95, bull: 180, base: 130, bear: 65, probs: [25, 50, 25] },
+
+  // ===== CLOUD_SAAS =====
+  SNOW: { price: 180, bull: 290, base: 220, bear: 115, probs: [30, 50, 20] },
+  DDOG: { price: 145, bull: 220, base: 175, bear: 95, probs: [30, 50, 20] },
+  NOW: { price: 1050, bull: 1450, base: 1250, bear: 780, probs: [30, 50, 20] },
+  NET: { price: 130, bull: 220, base: 165, bear: 80, probs: [30, 45, 25] },
+
+  // ===== CYBER =====
+  PANW: { price: 380, bull: 500, base: 440, bear: 290, probs: [30, 55, 15] },
+  CRWD: { price: 380, bull: 540, base: 450, bear: 280, probs: [25, 55, 20] },
+  ZS: { price: 215, bull: 320, base: 260, bear: 150, probs: [30, 50, 20] },
+  FTNT: { price: 105, bull: 145, base: 125, bear: 80, probs: [25, 60, 15] },
+
+  // ===== FINTECH =====
+  COIN: { price: 280, bull: 480, base: 360, bear: 165, probs: [30, 45, 25] },
+  HOOD: { price: 60, bull: 110, base: 80, bear: 35, probs: [35, 45, 20] },
+  SOFI: { price: 22, bull: 38, base: 28, bear: 13, probs: [30, 50, 20] },
+  V: { price: 330, bull: 410, base: 370, bear: 270, probs: [25, 60, 15] },
+
+  // ===== BIOTECH =====
+  LLY: { price: 730, bull: 1100, base: 900, bear: 580, probs: [35, 50, 15] },
+  VRTX: { price: 460, bull: 620, base: 540, bear: 360, probs: [30, 55, 15] },
+  REGN: { price: 720, bull: 1000, base: 850, bear: 540, probs: [25, 55, 20] },
+  MRNA: { price: 38, bull: 95, base: 55, bear: 20, probs: [25, 45, 30] },
+
+  // ===== EV_MOBILITY =====
+  TSLA: { price: 415, bull: 700, base: 480, bear: 230, probs: [35, 40, 25] },
+  RIVN: { price: 14, bull: 32, base: 19, bear: 7, probs: [25, 45, 30] },
+  QS: { price: 5.8, bull: 18, base: 9, bear: 2.5, probs: [20, 40, 40] },
+
+  // ===== EMERGING =====
+  PLTR: { price: 75, bull: 130, base: 95, bear: 45, probs: [35, 45, 20] },
+  IONQ: { price: 35, bull: 80, base: 45, bear: 15, probs: [20, 45, 35] },
+  RGTI: { price: 14, bull: 35, base: 18, bear: 5, probs: [20, 40, 40] },
+  ASTS: { price: 32, bull: 70, base: 45, bear: 17, probs: [25, 45, 30] }
 };
 
 function getScenarios(ticker) {
@@ -1715,16 +2068,15 @@ function paintSparklines() {
 
 // Sector heat map: average changePct per theme
 function paintHeatmap() {
-  const themes = ['infra', 'energy', 'industrial', 'defense', 'crypto'];
-  const themeKey = { infra: 'ai_infra', energy: 'ai_energy', industrial: 'industrial', defense: 'defense', crypto: 'crypto' };
+  const themes = ['mega', 'infra', 'semi', 'energy', 'saas', 'cyber', 'fintech', 'biotech', 'industrial', 'defense', 'ev', 'crypto', 'emerging'];
   for (const th of themes) {
     const picksInTheme = PICKS.filter(p => p.theme === th);
     const changes = picksInTheme.map(p => liveFresh[p.ticker]?.changePct).filter(v => typeof v === 'number');
-    const valEl = document.querySelector('.heat-value[data-v="' + themeKey[th] + '"]');
-    const countEl = document.querySelector('.heat-count[data-c="' + themeKey[th] + '"]');
+    const valEl = document.querySelector('.heat-value[data-v="' + th + '"]');
+    const countEl = document.querySelector('.heat-count[data-c="' + th + '"]');
     if (!valEl) continue;
     if (changes.length === 0) {
-      valEl.textContent = '—';
+      valEl.textContent = picksInTheme.length === 0 ? '—' : '...';
       valEl.className = 'heat-value flat';
       if (countEl) countEl.textContent = picksInTheme.length + ' picks';
       continue;
