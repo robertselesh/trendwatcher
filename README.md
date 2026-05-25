@@ -6,15 +6,20 @@ Cyberpunk-themed equity watchlist with **live AI commentary** and **news feed** 
 
 ## Features
 
-- **30 curated picks** across 5 themes (AI_INFRA, AI_ENERGY, INDUSTRIAL, DEFENSE, CRYPTO)
+- **62 curated picks** across 13 themes (AI_INFRA, AI_ENERGY, INDUSTRIAL, DEFENSE, CRYPTO, MEGA_CAP, SEMI, CLOUD_SAAS, CYBER, FINTECH, BIOTECH, EV, EMERGING)
 - **Bull / Base / Bear scenarios** with explicit probabilities + expected value (EV)
+- **Live Yahoo prices** — batched fetch, 15min cache, % change + sparkline + 52w range per card
+- **Today's Signals bar** — top movers, 52w extremes, earnings within 45d (each row clickable → deep-dive)
+- **Earnings badge** per card — auto-pulled from Yahoo, color-coded by proximity (≤7d imminent, ≤21d soon)
+- **Position tracker** — per-ticker status (WATCHING / OPEN / CLOSED), entry, size €, exit, private notes; auto P&L on open positions; portfolio summary chip in header (open count, invested €, P&L %/€)
 - **Position Sizer** — portfolio €, max % per pick, risk tolerance → suggested allocation per ticker
 - **Pre-trade checklist** — 5 discipline items per pick, persisted in `localStorage`
 - **AI Daily Brief** — auto-generated 4-5 sentence market summary, cached 6h
 - **AI Q&A chat** — ask anything about the watchlist ("top 3 risk/reward", "CRDO vs VRT", etc.)
 - **News feed per ticker** — pulls latest Google News headlines
 - **AI deep-dive on click** — 200-word analysis combining thesis + scenarios + fresh news
-- **Conviction & risk filters** + theme color-coding
+- **Sector heatmap** + **correlation matrix** for diversification
+- **Sort by** conviction / mcap / today % / P&L %; **filter by** sector / star / position status
 - **Personal watchlist** (star tickers) — saved per-browser
 - **Cyberpunk dark theme** with scanlines, glitch effects, neon accents
 

@@ -966,6 +966,210 @@
     letter-spacing: 0.06em;
     margin-top: 3px;
   }
+
+  /* === Today's Signals top bar === */
+  .signals-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+    padding: 14px 12px 12px;
+    background: var(--panel);
+    border: 1px solid var(--dim);
+    position: relative;
+  }
+  .signals-bar::before {
+    content: "◆ TODAY'S_SIGNALS";
+    position: absolute; top: -10px; left: 12px;
+    background: var(--bg); padding: 0 8px;
+    color: var(--neon-orange);
+    font-size: 11px; letter-spacing: 0.15em;
+    text-shadow: 0 0 6px var(--neon-orange);
+  }
+  .signal-panel {
+    border: 1px solid var(--dim);
+    background: var(--panel-2);
+    padding: 8px 10px 10px;
+  }
+  .signal-panel .sig-head {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 4px var(--neon-cyan);
+    margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .signal-panel.movers .sig-head { color: var(--neon-magenta); text-shadow: 0 0 4px var(--neon-magenta); }
+  .signal-panel.extremes .sig-head { color: var(--neon-lime); text-shadow: 0 0 4px var(--neon-lime); }
+  .signal-panel.earnings .sig-head { color: var(--neon-yellow); text-shadow: 0 0 4px var(--neon-yellow); }
+  .signal-panel .sig-head .sig-count {
+    font-size: 9px; color: var(--muted); text-shadow: none;
+  }
+  .sig-row {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0;
+    border-top: 1px dashed rgba(67, 67, 106, 0.4);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .sig-row:first-of-type { border-top: 0; }
+  .sig-row:hover { background: rgba(0, 240, 255, 0.05); }
+  .sig-row .sig-tk {
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--text);
+    letter-spacing: 0.05em;
+  }
+  .sig-row .sig-meta {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sig-row .sig-val {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .sig-val.pos { color: var(--neon-lime); text-shadow: 0 0 4px rgba(170,255,0,0.5); }
+  .sig-val.neg { color: var(--neon-red); text-shadow: 0 0 4px rgba(255,46,99,0.5); }
+  .sig-val.warn { color: var(--neon-yellow); text-shadow: 0 0 4px rgba(255,229,0,0.5); }
+  .sig-val.dim { color: var(--muted); }
+  .sig-empty {
+    font-size: 10px;
+    color: var(--muted);
+    padding: 6px 0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* === Position tracker === */
+  .pos-pill {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+    margin-left: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .pos-pill:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+  .pos-pill.watching {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    text-shadow: 0 0 4px var(--neon-cyan);
+  }
+  .pos-pill.open {
+    border-color: var(--neon-lime);
+    color: var(--neon-lime);
+    text-shadow: 0 0 4px var(--neon-lime);
+    background: rgba(170,255,0,0.06);
+  }
+  .pos-pill.closed {
+    border-color: var(--muted);
+    color: var(--muted);
+    opacity: 0.6;
+  }
+  .pos-line {
+    margin: 6px 0;
+    padding: 6px 8px;
+    border: 1px dashed var(--neon-lime);
+    background: rgba(170,255,0,0.04);
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    gap: 6px;
+  }
+  .pos-line .pos-pnl { font-weight: 800; font-size: 11.5px; letter-spacing: 0.06em; }
+  .pos-line .pos-pnl.pos { color: var(--neon-lime); text-shadow: 0 0 4px var(--neon-lime); }
+  .pos-line .pos-pnl.neg { color: var(--neon-red); text-shadow: 0 0 4px var(--neon-red); }
+  .pos-line .pos-meta { font-size: 9.5px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+  .pos-line .pos-edit {
+    background: transparent;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+    font-family: inherit; font-size: 9px;
+    padding: 2px 7px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .pos-line .pos-edit:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+
+  /* Portfolio summary chip in header */
+  .port-chip {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 9px;
+    border: 1px solid var(--neon-lime);
+    color: var(--neon-lime);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-shadow: 0 0 4px var(--neon-lime);
+    cursor: pointer;
+  }
+  .port-chip.flat { border-color: var(--dim); color: var(--muted); text-shadow: none; }
+  .port-chip.neg { border-color: var(--neon-red); color: var(--neon-red); text-shadow: 0 0 4px var(--neon-red); }
+  .port-chip:hover { background: rgba(170,255,0,0.08); }
+
+  /* Position editor inside modal */
+  .pos-editor {
+    margin: 14px 0;
+    padding: 12px;
+    border: 1px solid var(--dim);
+    background: var(--panel-2);
+  }
+  .pos-editor h4 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--neon-lime);
+    text-shadow: 0 0 4px var(--neon-lime);
+    text-transform: uppercase;
+  }
+  .pos-editor-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .pos-editor label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+  .pos-editor input, .pos-editor select, .pos-editor textarea {
+    background: var(--bg);
+    border: 1px solid var(--dim);
+    color: var(--text);
+    font-family: inherit;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .pos-editor input:focus, .pos-editor select:focus, .pos-editor textarea:focus { outline: none; border-color: var(--neon-cyan); }
+  .pos-editor textarea { width: 100%; min-height: 50px; resize: vertical; }
+  .pos-editor-actions { display: flex; gap: 8px; margin-top: 6px; }
+  .pos-editor-actions button {
+    background: transparent;
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    font-family: inherit;
+    font-size: 10px;
+    padding: 5px 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-shadow: 0 0 4px var(--neon-cyan);
+  }
+  .pos-editor-actions button:hover { background: var(--neon-cyan); color: var(--bg); text-shadow: none; }
+  .pos-editor-actions button.danger { border-color: var(--neon-red); color: var(--neon-red); text-shadow: 0 0 4px var(--neon-red); }
+  .pos-editor-actions button.danger:hover { background: var(--neon-red); color: var(--bg); text-shadow: none; }
 </style>
 </head>
 <body>
@@ -975,6 +1179,7 @@
   <h1>Breakout.Watchlist</h1>
   <div class="sub">
     <span class="pulse-dot"></span>LIVE_FEED · 2026.05.24 · <span class="tag">62 nodes</span> · <span class="tag">13 sectors</span> · <span class="tag">6-18m horizon</span>
+    <span class="port-chip flat" id="portChip" title="Open positions summary">PORT:: 0 OPEN · €0 · —</span>
   </div>
 </header>
 
@@ -1018,6 +1223,22 @@
     <span>SCOPE://</span>
     <button class="btn-corr" id="openCorr">▶ CORRELATION_MATRIX</button>
     <span style="margin-left:auto;" id="corrHint">60d returns · click cell to inspect</span>
+  </div>
+</section>
+
+<!-- Today's Signals top bar -->
+<section class="signals-bar" id="signalsBar">
+  <div class="signal-panel movers">
+    <div class="sig-head"><span>▲ TOP_MOVERS</span><span class="sig-count" id="moversCount">—</span></div>
+    <div class="sig-body" id="moversBody"><div class="sig-empty">// Awaiting live data…</div></div>
+  </div>
+  <div class="signal-panel extremes">
+    <div class="sig-head"><span>◆ 52W_EXTREMES</span><span class="sig-count" id="extremesCount">—</span></div>
+    <div class="sig-body" id="extremesBody"><div class="sig-empty">// Awaiting live data…</div></div>
+  </div>
+  <div class="signal-panel earnings">
+    <div class="sig-head"><span>⚡ EARNINGS_WATCH</span><span class="sig-count" id="earningsCount">—</span></div>
+    <div class="sig-body" id="earningsBody"><div class="sig-empty">// Awaiting live data…</div></div>
   </div>
 </section>
 
@@ -1068,10 +1289,19 @@
   <button class="chip" data-theme="emerging">EMERGING</button>
   <span class="spacer"></span>
   <button class="chip" id="watchlistOnly">★ FAV_ONLY</button>
+  <select class="chip" id="statusSel" title="Filter by position status">
+    <option value="all">STATUS::ALL</option>
+    <option value="watching">STATUS::WATCHING</option>
+    <option value="open">STATUS::OPEN</option>
+    <option value="closed">STATUS::CLOSED</option>
+    <option value="none">STATUS::UNFLAGGED</option>
+  </select>
   <select class="chip" id="sortSel">
     <option value="conviction">SORT::CONVICTION</option>
     <option value="mcap">SORT::MCAP</option>
     <option value="ticker">SORT::TICKER</option>
+    <option value="movePct">SORT::TODAY_%</option>
+    <option value="pnl">SORT::P&amp;L_%</option>
   </select>
 </div>
 
@@ -1750,8 +1980,160 @@ function isChecklistReady(ticker) {
 let activeTheme = 'all';
 let watchlistOnly = false;
 let sortBy = 'conviction';
+let statusFilter = 'all'; // all | watching | open | closed | none
 
 const watchlist = new Set(JSON.parse(localStorage.getItem('bw_watchlist') || '[]'));
+
+// ===== Position tracker state =====
+const POSITIONS_KEY = 'bw_positions_v1';
+const positions = JSON.parse(localStorage.getItem(POSITIONS_KEY) || '{}');
+
+function savePositions() {
+  try { localStorage.setItem(POSITIONS_KEY, JSON.stringify(positions)); } catch {}
+}
+function getPos(ticker) { return positions[ticker] || null; }
+function setPos(ticker, patch) {
+  const cur = positions[ticker] || {};
+  positions[ticker] = Object.assign({}, cur, patch);
+  if (!positions[ticker].status || positions[ticker].status === 'none') {
+    delete positions[ticker];
+  }
+  savePositions();
+}
+function deletePos(ticker) { delete positions[ticker]; savePositions(); }
+function cycleStatus(ticker) {
+  const cur = positions[ticker];
+  const order = ['watching', 'open', 'closed'];
+  if (!cur) {
+    positions[ticker] = { status: 'watching', openedAt: Date.now() };
+  } else {
+    const idx = order.indexOf(cur.status);
+    const next = idx === order.length - 1 ? null : order[idx + 1];
+    if (next === null) { delete positions[ticker]; }
+    else { cur.status = next; if (next === 'open' && !cur.openedAt) cur.openedAt = Date.now(); }
+  }
+  savePositions();
+}
+function calcPnL(ticker) {
+  const pos = positions[ticker];
+  if (!pos || pos.status !== 'open' || !pos.entryPrice || !pos.sizeEur) return null;
+  const fresh = liveFresh[ticker];
+  if (!fresh || !fresh.price) return null;
+  const pctMove = (fresh.price - pos.entryPrice) / pos.entryPrice;
+  const pnlEur = pos.sizeEur * pctMove;
+  return { pctMove: pctMove * 100, pnlEur: pnlEur, curPrice: fresh.price };
+}
+function updatePortChip() {
+  const chip = document.getElementById('portChip');
+  if (!chip) return;
+  let openCount = 0, invested = 0, currentVal = 0, hasPrices = true;
+  for (const [t, pos] of Object.entries(positions)) {
+    if (pos.status !== 'open' || !pos.entryPrice || !pos.sizeEur) continue;
+    openCount++;
+    invested += pos.sizeEur;
+    const fresh = liveFresh[t];
+    if (fresh && fresh.price) {
+      currentVal += pos.sizeEur * (fresh.price / pos.entryPrice);
+    } else {
+      currentVal += pos.sizeEur;
+      hasPrices = false;
+    }
+  }
+  if (openCount === 0) {
+    chip.className = 'port-chip flat';
+    chip.textContent = 'PORT:: 0 OPEN · €0 · —';
+    return;
+  }
+  const pnlEur = currentVal - invested;
+  const pnlPct = invested ? (pnlEur / invested) * 100 : 0;
+  const sign = pnlPct >= 0 ? '+' : '';
+  chip.className = 'port-chip ' + (pnlPct > 0 ? '' : pnlPct < 0 ? 'neg' : 'flat');
+  const fmtEur = n => '€' + Math.round(n).toLocaleString('hu-HU');
+  chip.textContent = `PORT:: ${openCount} OPEN · ${fmtEur(invested)} · ${sign}${pnlPct.toFixed(1)}% (${pnlEur >= 0 ? '+' : ''}${fmtEur(pnlEur)})${hasPrices ? '' : '*'}`;
+}
+
+// ===== Today's Signals renderer =====
+function renderSignals() {
+  const moversBody = document.getElementById('moversBody');
+  const extremesBody = document.getElementById('extremesBody');
+  const earningsBody = document.getElementById('earningsBody');
+  if (!moversBody) return;
+
+  const enriched = PICKS.map(p => {
+    const f = liveFresh[p.ticker];
+    return { p, f };
+  }).filter(x => x.f && x.f.price && !x.f.error);
+
+  // --- TOP MOVERS (top 4 by abs(changePct)) ---
+  const movers = enriched
+    .filter(x => typeof x.f.changePct === 'number')
+    .sort((a, b) => Math.abs(b.f.changePct) - Math.abs(a.f.changePct))
+    .slice(0, 4);
+  document.getElementById('moversCount').textContent = enriched.length ? `${movers.length}/${enriched.length}` : '—';
+  moversBody.innerHTML = movers.length === 0
+    ? '<div class="sig-empty">// No live moves yet…</div>'
+    : movers.map(({ p, f }) => {
+        const dir = f.changePct > 0 ? 'pos' : f.changePct < 0 ? 'neg' : 'dim';
+        const sign = f.changePct > 0 ? '+' : '';
+        return `<div class="sig-row" data-ticker="${p.ticker}" data-action="deepdive">
+          <span class="sig-tk">${p.ticker}</span>
+          <span class="sig-meta">$${f.price.toFixed(2)} · ${p.themeLabel.split('::')[0]}</span>
+          <span class="sig-val ${dir}">${sign}${f.changePct.toFixed(2)}%</span>
+        </div>`;
+      }).join('');
+
+  // --- 52W EXTREMES (closest to 52w high or low, top 4) ---
+  const extremes = enriched
+    .filter(x => x.f.fiftyTwoWeekHigh && x.f.fiftyTwoWeekLow)
+    .map(x => {
+      const distHi = (x.f.fiftyTwoWeekHigh - x.f.price) / x.f.fiftyTwoWeekHigh; // 0..1, smaller = closer to high
+      const distLo = (x.f.price - x.f.fiftyTwoWeekLow) / x.f.fiftyTwoWeekLow;   // 0..1, smaller = closer to low
+      const closerHi = distHi < distLo;
+      return Object.assign({}, x, { dist: closerHi ? distHi : distLo, isHi: closerHi });
+    })
+    .filter(x => x.dist < 0.10) // within 10% of an extreme
+    .sort((a, b) => a.dist - b.dist)
+    .slice(0, 4);
+  document.getElementById('extremesCount').textContent = enriched.length ? `${extremes.length}/${enriched.length}` : '—';
+  extremesBody.innerHTML = extremes.length === 0
+    ? '<div class="sig-empty">// All tickers mid-range</div>'
+    : extremes.map(({ p, f, dist, isHi }) => {
+        const label = isHi ? '52W_HI' : '52W_LO';
+        const cls = isHi ? 'pos' : 'warn';
+        const pct = (dist * 100).toFixed(1);
+        return `<div class="sig-row" data-ticker="${p.ticker}" data-action="deepdive">
+          <span class="sig-tk">${p.ticker}</span>
+          <span class="sig-meta">$${f.price.toFixed(2)} · ${isHi ? 'near hi $' + f.fiftyTwoWeekHigh.toFixed(2) : 'near lo $' + f.fiftyTwoWeekLow.toFixed(2)}</span>
+          <span class="sig-val ${cls}">${label} -${pct}%</span>
+        </div>`;
+      }).join('');
+
+  // --- EARNINGS WATCH (next 4 by ascending days, only future, ≤45d) ---
+  const earningsList = enriched
+    .filter(x => typeof x.f.earningsDaysAway === 'number' && x.f.earningsDaysAway >= 0 && x.f.earningsDaysAway <= 45)
+    .sort((a, b) => a.f.earningsDaysAway - b.f.earningsDaysAway)
+    .slice(0, 4);
+  document.getElementById('earningsCount').textContent = enriched.length ? `${earningsList.length}/${enriched.length}` : '—';
+  earningsBody.innerHTML = earningsList.length === 0
+    ? '<div class="sig-empty">// No earnings within 45d</div>'
+    : earningsList.map(({ p, f }) => {
+        const d = f.earningsDaysAway;
+        const cls = d <= 3 ? 'neg' : d <= 14 ? 'warn' : 'dim';
+        return `<div class="sig-row" data-ticker="${p.ticker}" data-action="deepdive">
+          <span class="sig-tk">${p.ticker}</span>
+          <span class="sig-meta">$${f.price.toFixed(2)} · ${p.themeLabel.split('::')[0]}</span>
+          <span class="sig-val ${cls}">+${d}d</span>
+        </div>`;
+      }).join('');
+
+  // Wire clicks (delegated to rows)
+  document.querySelectorAll('#signalsBar .sig-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const t = row.dataset.ticker;
+      if (typeof showDeepDive === 'function') showDeepDive(t);
+    });
+  });
+}
 
 function chartUrl(t) { return `https://finance.yahoo.com/quote/${t}/`; }
 function tradingViewUrl(t) { return `https://www.tradingview.com/symbols/${t}/`; }
@@ -1768,9 +2150,28 @@ function render() {
   const grid = document.getElementById('grid');
   let list = PICKS.filter(p => activeTheme === 'all' || p.theme === activeTheme);
   if (watchlistOnly) list = list.filter(p => watchlist.has(p.ticker));
+  if (statusFilter !== 'all') {
+    list = list.filter(p => {
+      const pos = positions[p.ticker];
+      if (statusFilter === 'none') return !pos;
+      return pos && pos.status === statusFilter;
+    });
+  }
   list.sort((a, b) => {
     if (sortBy === 'conviction') return b.conviction - a.conviction;
     if (sortBy === 'mcap') return a.mcapNum - b.mcapNum;
+    if (sortBy === 'movePct') {
+      const fa = liveFresh[a.ticker], fb = liveFresh[b.ticker];
+      const va = (fa && typeof fa.changePct === 'number') ? fa.changePct : -Infinity;
+      const vb = (fb && typeof fb.changePct === 'number') ? fb.changePct : -Infinity;
+      return vb - va;
+    }
+    if (sortBy === 'pnl') {
+      const pa = calcPnL(a.ticker), pb = calcPnL(b.ticker);
+      const va = pa ? pa.pctMove : -Infinity;
+      const vb = pb ? pb.pctMove : -Infinity;
+      return vb - va;
+    }
     return a.ticker.localeCompare(b.ticker);
   });
 
@@ -1874,6 +2275,38 @@ function render() {
         <div class="checklist-status">${ready ? 'ALL CHECKS PASSED' : `${Object.values(checklist).filter(Boolean).length}/${CHECKLIST_ITEMS.length} CHECKED`}</div>
       </div>`;
 
+    // Position pill + open-position P&L line
+    const pos = positions[p.ticker];
+    const posStatus = pos ? pos.status : null;
+    const posLabel = posStatus ? posStatus.toUpperCase() : '+ TRACK';
+    const posCls = posStatus || '';
+    const posPill = `<span class="pos-pill ${posCls}" data-ticker="${p.ticker}" data-action="cyclepos" title="Click to cycle: watching → open → closed → off">${posLabel}</span>`;
+
+    let posLineBlock = '';
+    if (pos && pos.status === 'open') {
+      const pnl = calcPnL(p.ticker);
+      const sizeTxt = pos.sizeEur ? '€' + Math.round(pos.sizeEur).toLocaleString('hu-HU') : 'size n/a';
+      const entryTxt = pos.entryPrice ? '@ $' + (+pos.entryPrice).toFixed(2) : 'entry n/a';
+      const pnlTxt = pnl
+        ? `<span class="pos-pnl ${pnl.pctMove >= 0 ? 'pos' : 'neg'}">${pnl.pctMove >= 0 ? '+' : ''}${pnl.pctMove.toFixed(2)}% (${pnl.pnlEur >= 0 ? '+' : ''}€${Math.round(pnl.pnlEur).toLocaleString('hu-HU')})</span>`
+        : '<span class="pos-meta">// add entry + size →</span>';
+      posLineBlock = `<div class="pos-line">
+        <span class="pos-meta">OPEN ${entryTxt} · ${sizeTxt}</span>
+        ${pnlTxt}
+        <button class="pos-edit" data-ticker="${p.ticker}" data-action="editpos">▸ EDIT</button>
+      </div>`;
+    } else if (pos && pos.status === 'watching') {
+      posLineBlock = `<div class="pos-line" style="border-color: var(--neon-cyan); background: rgba(0,240,255,0.04);">
+        <span class="pos-meta" style="color: var(--neon-cyan);">⊙ WATCHING — promote to OPEN when filled</span>
+        <button class="pos-edit" data-ticker="${p.ticker}" data-action="editpos">▸ EDIT</button>
+      </div>`;
+    } else if (pos && pos.status === 'closed') {
+      posLineBlock = `<div class="pos-line" style="border-color: var(--dim); background: rgba(67,67,106,0.08); opacity: 0.75;">
+        <span class="pos-meta">✕ CLOSED${pos.entryPrice ? ' · entry $' + (+pos.entryPrice).toFixed(2) : ''}${pos.exitPrice ? ' · exit $' + (+pos.exitPrice).toFixed(2) : ''}</span>
+        <button class="pos-edit" data-ticker="${p.ticker}" data-action="editpos">▸ EDIT</button>
+      </div>`;
+    }
+
     return `
       <div class="card t-${p.theme}">
         <div class="card-head">
@@ -1885,8 +2318,10 @@ function render() {
           <span class="badge b-mc">${p.mcap}</span>
           <span class="badge b-risk-${p.risk}">${riskLabel}</span>
           ${earningsBadge}
+          ${posPill}
         </div>
         ${freshBlock}
+        ${posLineBlock}
         ${liveBlock}
         ${scenBlock}
         <div class="conviction">
@@ -1928,10 +2363,120 @@ function render() {
     });
   });
 
+  // Wire position pill (cycle status on click)
+  document.querySelectorAll('.pos-pill[data-action="cyclepos"]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const t = el.dataset.ticker;
+      cycleStatus(t);
+      // When promoting to OPEN with no entry data, auto-populate from live price
+      const pos = positions[t];
+      if (pos && pos.status === 'open' && !pos.entryPrice) {
+        const fresh = liveFresh[t];
+        if (fresh && fresh.price) {
+          pos.entryPrice = fresh.price;
+          pos.openedAt = pos.openedAt || Date.now();
+          savePositions();
+        }
+      }
+      render();
+      updatePortChip();
+    });
+  });
+
+  // Wire position EDIT button → open modal editor
+  document.querySelectorAll('.pos-edit[data-action="editpos"]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openPositionEditor(el.dataset.ticker);
+    });
+  });
+
   // Repaint canvas-based visuals after innerHTML settles
   requestAnimationFrame(() => {
     if (typeof paintSparklines === 'function') paintSparklines();
     if (typeof paintHeatmap === 'function') paintHeatmap();
+    updatePortChip();
+  });
+}
+
+// ===== Position editor modal =====
+function openPositionEditor(ticker) {
+  const pick = PICKS.find(p => p.ticker === ticker);
+  const pos = positions[ticker] || { status: 'watching' };
+  const fresh = liveFresh[ticker];
+  const livePriceHint = fresh && fresh.price ? ` (live: $${fresh.price.toFixed(2)})` : '';
+
+  if (typeof openModal === 'function') {
+    openModal((pick ? pick.ticker + ' :: POSITION_EDITOR' : 'POSITION_EDITOR'));
+  }
+  const body = document.getElementById('modalBody');
+  body.className = 'modal-body';
+  body.innerHTML = `
+    <div class="pos-editor">
+      <h4>◆ POSITION_TRACKER :: ${ticker}</h4>
+      <div class="pos-editor-row">
+        <label>STATUS:
+          <select id="peStatus">
+            <option value="watching" ${pos.status === 'watching' ? 'selected' : ''}>WATCHING</option>
+            <option value="open" ${pos.status === 'open' ? 'selected' : ''}>OPEN</option>
+            <option value="closed" ${pos.status === 'closed' ? 'selected' : ''}>CLOSED</option>
+          </select>
+        </label>
+        <label>ENTRY $${livePriceHint}:
+          <input type="number" id="peEntry" step="0.01" value="${pos.entryPrice != null ? pos.entryPrice : ''}" placeholder="${fresh && fresh.price ? fresh.price.toFixed(2) : ''}">
+        </label>
+        <label>SIZE €:
+          <input type="number" id="peSize" step="50" value="${pos.sizeEur != null ? pos.sizeEur : ''}" placeholder="e.g. 3000">
+        </label>
+      </div>
+      <div class="pos-editor-row">
+        <label>EXIT $ (if closed):
+          <input type="number" id="peExit" step="0.01" value="${pos.exitPrice != null ? pos.exitPrice : ''}" placeholder="leave blank if open">
+        </label>
+        <label>OPENED:
+          <input type="date" id="peDate" value="${pos.openedAt ? new Date(pos.openedAt).toISOString().slice(0,10) : new Date().toISOString().slice(0,10)}">
+        </label>
+      </div>
+      <label style="display:block; margin-bottom:6px;">THESIS / NOTES (private):</label>
+      <textarea id="peNote" placeholder="Why this trade? Stop loss? Exit plan?">${pos.note ? pos.note.replace(/</g,'&lt;') : ''}</textarea>
+      <div class="pos-editor-actions">
+        <button id="peSave">▶ SAVE</button>
+        <button id="peUseLive" ${fresh && fresh.price ? '' : 'disabled'}>▶ USE_LIVE_AS_ENTRY</button>
+        <button class="danger" id="peDelete">✕ REMOVE</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('modalNewsList').innerHTML = '';
+
+  document.getElementById('peUseLive').addEventListener('click', () => {
+    if (fresh && fresh.price) document.getElementById('peEntry').value = fresh.price.toFixed(2);
+  });
+  document.getElementById('peSave').addEventListener('click', () => {
+    const status = document.getElementById('peStatus').value;
+    const entry = parseFloat(document.getElementById('peEntry').value) || null;
+    const size = parseFloat(document.getElementById('peSize').value) || null;
+    const exit = parseFloat(document.getElementById('peExit').value) || null;
+    const date = document.getElementById('peDate').value;
+    const note = document.getElementById('peNote').value;
+    positions[ticker] = {
+      status: status,
+      entryPrice: entry,
+      sizeEur: size,
+      exitPrice: exit,
+      openedAt: date ? new Date(date).getTime() : (pos.openedAt || Date.now()),
+      note: note
+    };
+    savePositions();
+    render();
+    updatePortChip();
+    if (typeof closeModal === 'function') closeModal();
+  });
+  document.getElementById('peDelete').addEventListener('click', () => {
+    deletePos(ticker);
+    render();
+    updatePortChip();
+    if (typeof closeModal === 'function') closeModal();
   });
 }
 
@@ -1950,6 +2495,17 @@ document.getElementById('watchlistOnly').addEventListener('click', (e) => {
 });
 document.getElementById('sortSel').addEventListener('change', (e) => {
   sortBy = e.target.value;
+  render();
+});
+document.getElementById('statusSel').addEventListener('change', (e) => {
+  statusFilter = e.target.value;
+  render();
+});
+// Allow clicking portfolio chip → show open-positions filter
+document.getElementById('portChip').addEventListener('click', () => {
+  const sel = document.getElementById('statusSel');
+  sel.value = 'open';
+  statusFilter = 'open';
   render();
 });
 
@@ -1986,6 +2542,8 @@ async function refreshLiveData() {
       paintSparklines();
       paintHeatmap();
       checkAlerts();
+      renderSignals();
+      updatePortChip();
       console.log('[yfinance] refreshed', okCount, 'tickers');
       return true;
     }
@@ -2584,6 +3142,8 @@ document.getElementById('grid').addEventListener('click', (e) => {
 // On init: paint with cached data if available
 paintSparklines();
 paintHeatmap();
+renderSignals();
+updatePortChip();
 
 // Auto-load daily brief on page open
 setTimeout(() => loadDailyBrief(false), 400);
