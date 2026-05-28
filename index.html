@@ -2997,11 +2997,14 @@ PÉLDA jó válasz: "A CRDO és VRT párosban a CRDO a tisztább play: 5/5 convi
 
 async function aiCall(userMessage, opts = {}) {
   const messages = [];
-  // Add explicit Hungarian instruction inline (some smaller models ignore system role)
-  const wrappedUserMsg = '[VÁLASZOLJ MAGYARUL]\n\nItt a 30 pickes watchlist:\n\n' + PICKS_SUMMARY() + '\n\nKérdés: ' + userMessage + '\n\n(Emlékeztető: magyarul válaszolj, konkrét tickerekkel és számokkal.)';
+  // For prompts that already include full ticker context (e.g. deep-dive), pass bare:true
+  // to skip the watchlist-context wrap that would otherwise create dual-context confusion.
+  const content = opts.bare
+    ? ('[VÁLASZOLJ MAGYARUL]\n\n' + userMessage)
+    : ('[VÁLASZOLJ MAGYARUL]\n\nItt a 62 pickes watchlist:\n\n' + PICKS_SUMMARY() + '\n\nKérdés: ' + userMessage + '\n\n(Emlékeztető: magyarul válaszolj, konkrét tickerekkel és számokkal.)');
   messages.push({
     role: 'user',
-    content: wrappedUserMsg
+    content: content
   });
 
   const resp = await fetch('/api/ai', {
@@ -3204,7 +3207,7 @@ Struktúra:
 3. Mit figyelj a következő 2-4 hétben (konkrét catalyst-okat)
 4. Ár szint: hol szállj be / hol exit (scenarios alapján)`;
 
-    const answer = await aiCall(prompt, { maxTokens: 1000 });
+    const answer = await aiCall(prompt, { maxTokens: 1000, bare: true });
     modalBody.classList.remove('loading');
     modalBody.textContent = answer;
   } catch (err) {
