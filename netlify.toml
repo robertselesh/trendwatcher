@@ -26,6 +26,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/targets"
+  to = "/.netlify/functions/targets"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/breakout-watchlist"
   to = "/index.html"
   status = 200

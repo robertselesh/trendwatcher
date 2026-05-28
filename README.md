@@ -9,6 +9,7 @@ Cyberpunk-themed equity watchlist with **live AI commentary** and **news feed** 
 - **62 curated picks** across 13 themes (AI_INFRA, AI_ENERGY, INDUSTRIAL, DEFENSE, CRYPTO, MEGA_CAP, SEMI, CLOUD_SAAS, CYBER, FINTECH, BIOTECH, EV, EMERGING)
 - **Bull / Base / Bear scenarios** with explicit probabilities + expected value (EV)
 - **Live Yahoo prices** — batched fetch, 15min cache, % change + sparkline + 52w range per card
+- **Live analyst consensus** — auto-pulled target mean/high/low, recommendation, # analysts per ticker (computed upside vs live price); refreshes every 6h, no manual maintenance
 - **Today's Signals bar** — top movers, 52w extremes, earnings within 45d (each row clickable → deep-dive)
 - **Earnings badge** per card — auto-pulled from Yahoo, color-coded by proximity (≤7d imminent, ≤21d soon)
 - **Position tracker** — per-ticker status (WATCHING / OPEN / CLOSED), entry, size €, exit, private notes; auto P&L on open positions; portfolio summary chip in header (open count, invested €, P&L %/€)
@@ -29,7 +30,9 @@ Cyberpunk-themed equity watchlist with **live AI commentary** and **news feed** 
 - **Netlify Functions** as a serverless backend:
   - `/api/ai` → proxies to **Pollinations.ai** (free, no API key) for AI completions
   - `/api/news` → fetches Google News RSS per ticker (free, no API key)
-- `localStorage` for watchlist + checklist state + daily brief cache
+  - `/api/yfinance` → Yahoo chart endpoint: live price, % change, 52w range, earnings date, 60d history (free, no API key)
+  - `/api/targets` → Yahoo quoteSummary (crumb+cookie auth): analyst target mean/high/low, recommendation, # analysts (free, no API key)
+- `localStorage` for watchlist + checklist + positions + price/target caches + daily brief cache
 
 ## Why this design
 
@@ -55,13 +58,21 @@ Build settings (handled by `netlify.toml`):
 - Build command: *(empty)*
 - Functions directory: `netlify/functions`
 
-## Refreshing the watchlist
+## What's automatic vs manual
 
-The picks, prices, scenarios, and consensus targets are hard-coded in `index.html` (`PICKS`, `LIVE`, `SCENARIOS`). To refresh:
+**Automatic (no maintenance):**
+- Live prices, % change, 52w range, sparklines — refresh on load + every 15min (`/api/yfinance`)
+- Earnings dates / badges — from Yahoo, auto
+- Analyst consensus targets + recommendation — refresh on load + every 6h (`/api/targets`)
+- Today's Signals, sector heatmap, open-position P&L — all derived from the live feeds
+- **Weekday earnings-radar briefing** — a Cowork scheduled task (`trendwatcher-earnings-radar`, runs 07:30 Mon-Fri) detects imminent earnings across the 62 names, web-researches consensus/revisions/analyst actions, and delivers a Hungarian briefing. Edit schedule/scope from the Scheduled section in the sidebar.
 
-1. Open this repo in Cowork mode and ask Claude to re-research the tickers
-2. Or edit `index.html` directly
-3. Commit + push → Netlify auto-rebuilds
+**Manual (judgment layer — needs re-research + redeploy):**
+- The qualitative `thesis`, `catalysts`, `risks`, `conviction` in `PICKS`
+- The `SCENARIOS` bull/base/bear targets + probabilities
+- The hand-written notes in the `LIVE` block
+
+To refresh the manual layer: open this repo in Cowork mode and ask Claude to re-research the tickers (the earnings-radar briefing is a good trigger), then run `deploy.bat` → Netlify auto-rebuilds in ~15s.
 
 ## Disclaimer
 
