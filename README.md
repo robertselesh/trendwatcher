@@ -22,7 +22,7 @@ Cyberpunk-themed equity watchlist with **live AI commentary** and **news feed** 
 - **Sector heatmap** + **correlation matrix** for diversification
 - **Sort by** conviction / mcap / today % / P&L %; **filter by** sector / star / position status
 - **Personal watchlist** (star tickers) — saved per-browser
-- **Cyberpunk dark theme** with scanlines, glitch effects, neon accents
+- **Theme switcher** — toggle between **Cyberpunk** (default: neon, monospace, scanlines) and **Clean** (professional dark dashboard: sans-serif, subtle borders, no glow/animation, GitHub-Dark-style palette). Click the `◑ CLEAN_THEME` button in the header; choice persists.
 
 ## Stack
 

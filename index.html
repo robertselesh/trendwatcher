@@ -683,6 +683,171 @@
   .live-target .lt-rec.sell { border-color: var(--neon-red); color: var(--neon-red); }
   .live-target .lt-meta { font-size: 9px; color: var(--muted); letter-spacing: 0.05em; margin-left: auto; }
 
+  /* ====================================================================
+     CLEAN THEME — opt-in via body.theme-clean
+     Professional dark-dashboard look (GitHub Dark / Bloomberg terminal):
+     sans-serif, subtle borders, no glow / scanlines / animations.
+     ==================================================================== */
+  body.theme-clean {
+    --bg: #0d1117;
+    --bg-2: #161b22;
+    --panel: #161b22;
+    --panel-2: #1c2128;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --dim: #30363d;
+    --neon-cyan: #58a6ff;
+    --neon-magenta: #d2a8ff;
+    --neon-lime: #3fb950;
+    --neon-yellow: #d29922;
+    --neon-orange: #f0883e;
+    --neon-red: #f85149;
+    --neon-purple: #bc8cff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  /* Disable cyberpunk effects in clean mode */
+  body.theme-clean,
+  body.theme-clean *,
+  body.theme-clean *::before,
+  body.theme-clean *::after {
+    text-shadow: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+  /* Hide scanlines */
+  body.theme-clean::before,
+  body.theme-clean::after { display: none !important; }
+
+  /* Re-apply softer focus rings & key shadows */
+  body.theme-clean .modal { box-shadow: 0 16px 48px rgba(0,0,0,0.6) !important; }
+
+  /* Typography: keep monospace ONLY for tickers/prices (numerical alignment) */
+  body.theme-clean,
+  body.theme-clean input,
+  body.theme-clean select,
+  body.theme-clean textarea,
+  body.theme-clean button,
+  body.theme-clean .commentary .body,
+  body.theme-clean .note,
+  body.theme-clean .thesis,
+  body.theme-clean .modal-body { font-family: inherit !important; }
+  body.theme-clean .ticker,
+  body.theme-clean .price,
+  body.theme-clean .target,
+  body.theme-clean .live-price,
+  body.theme-clean .lt-tgt,
+  body.theme-clean .lt-up,
+  body.theme-clean .sig-tk,
+  body.theme-clean .sig-val,
+  body.theme-clean .scen-target,
+  body.theme-clean .ev-val,
+  body.theme-clean .pos-pnl,
+  body.theme-clean .heat-value { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important; }
+
+  /* H1: kill blink + magenta double-shadow */
+  body.theme-clean h1 {
+    color: var(--neon-cyan);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  body.theme-clean h1::before { content: '' !important; }
+  body.theme-clean h1::after { content: '' !important; }
+
+  /* Card corner brackets off; flat 1px border */
+  body.theme-clean .card { border: 1px solid var(--dim) !important; }
+  body.theme-clean .card::before,
+  body.theme-clean .card::after { display: none !important; }
+
+  /* Section labels (commentary / heatmap / signals / sizer) — simple bracketed labels */
+  body.theme-clean .commentary::before,
+  body.theme-clean .heatmap::before,
+  body.theme-clean .signals-bar::before,
+  body.theme-clean .sizer::before,
+  body.theme-clean .ai-chat::before {
+    background: var(--panel) !important;
+    color: var(--muted) !important;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  /* Buttons */
+  body.theme-clean .btn,
+  body.theme-clean .chip,
+  body.theme-clean .card-action,
+  body.theme-clean button:not(.star-btn):not(.modal-close):not(.heat-cell):not(.sig-row) {
+    background: var(--panel-2) !important;
+    border: 1px solid var(--dim) !important;
+    color: var(--text) !important;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  body.theme-clean .btn:hover,
+  body.theme-clean .chip:hover,
+  body.theme-clean .card-action:hover {
+    background: #21262d !important;
+    border-color: var(--neon-cyan) !important;
+    color: var(--neon-cyan) !important;
+  }
+  body.theme-clean .chip.active {
+    background: rgba(88, 166, 255, 0.12) !important;
+    border-color: var(--neon-cyan) !important;
+    color: var(--neon-cyan) !important;
+  }
+
+  /* Badges */
+  body.theme-clean .badge,
+  body.theme-clean .earnings-badge,
+  body.theme-clean .pos-pill,
+  body.theme-clean .lt-rec {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  /* Headers of subsections (CATALYSTS, RISKS, etc.) */
+  body.theme-clean .section-label {
+    color: var(--muted) !important;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  /* Live-target lila → neutral accent */
+  body.theme-clean .live-target {
+    border-color: var(--dim) !important;
+    background: rgba(88, 166, 255, 0.04) !important;
+  }
+  body.theme-clean .live-target .lt-label { color: var(--neon-cyan) !important; }
+
+  /* Position line tone-down */
+  body.theme-clean .pos-line { background: rgba(63, 185, 80, 0.04) !important; }
+
+  /* Pulse dot in header */
+  body.theme-clean .pulse-dot {
+    background: var(--neon-lime) !important;
+    box-shadow: none !important;
+  }
+
+  /* Theme toggle button itself */
+  .theme-toggle {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 10px;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.12s;
+  }
+  .theme-toggle:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+  body.theme-clean .theme-toggle { letter-spacing: 0.04em; }
+
   /* === Earnings badge === */
   .earnings-badge {
     display: inline-block;
@@ -1207,6 +1372,7 @@
   <div class="sub">
     <span class="pulse-dot"></span>LIVE_FEED · 2026.05.24 · <span class="tag">62 nodes</span> · <span class="tag">13 sectors</span> · <span class="tag">6-18m horizon</span>
     <span class="port-chip flat" id="portChip" title="Open positions summary">PORT:: 0 OPEN · €0 · —</span>
+    <button class="theme-toggle" id="themeToggle" title="Switch between cyberpunk and clean theme">◑ CLEAN_THEME</button>
   </div>
 </header>
 
@@ -1342,6 +1508,36 @@
 </div>
 
 <script>
+// ===== Theme switcher (apply BEFORE first paint to avoid flash) =====
+(function initTheme() {
+  try {
+    const saved = localStorage.getItem('bw_theme') || 'cyber';
+    if (saved === 'clean') document.body.classList.add('theme-clean');
+  } catch {}
+})();
+function applyTheme(name) {
+  const btn = document.getElementById('themeToggle');
+  if (name === 'clean') {
+    document.body.classList.add('theme-clean');
+    if (btn) btn.textContent = '◐ CYBER_THEME';
+  } else {
+    document.body.classList.remove('theme-clean');
+    if (btn) btn.textContent = '◑ CLEAN_THEME';
+  }
+  try { localStorage.setItem('bw_theme', name); } catch {}
+}
+// Wire up toggle on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  const cur = document.body.classList.contains('theme-clean') ? 'clean' : 'cyber';
+  btn.textContent = cur === 'clean' ? '◐ CYBER_THEME' : '◑ CLEAN_THEME';
+  btn.addEventListener('click', () => {
+    const next = document.body.classList.contains('theme-clean') ? 'cyber' : 'clean';
+    applyTheme(next);
+  });
+});
+
 const PICKS = [
   {
     ticker: "CRDO", name: "Credo Technology", theme: "infra",
