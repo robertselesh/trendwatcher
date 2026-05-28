@@ -48,10 +48,11 @@ exports.handler = async (event) => {
     referrer: 'trendwatcher'
   };
 
-  // Try up to 3 attempts on 5xx / network errors
+  // Try up to 5 attempts on transient failures (5xx, 429, queue-full).
+  // Pollinations free tier limits to ~1 concurrent request per IP.
   let lastError = null;
   let lastStatus = 0;
-  for (let attempt = 1; attempt <= 3; attempt++) {
+  for (let attempt = 1; attempt <= 5; attempt++) {
     try {
       const upstream = await fetch('https://text.pollinations.ai/openai', {
         method: 'POST',
@@ -70,9 +71,13 @@ exports.handler = async (event) => {
       if (!upstream.ok) {
         lastStatus = upstream.status;
         lastError = (data && (data.error && (data.error.message || data.error)) || data.message) || ('Pollinations ' + upstream.status);
-        // 5xx -> retry; 4xx -> fail immediately
-        if (upstream.status >= 500 && attempt < 3) {
-          await sleep(700 * attempt);
+        const errText = String(lastError || '').toLowerCase();
+        const isQueueFull = errText.includes('queue full') || errText.includes('already queued') || errText.includes('rate limit') || errText.includes('too many');
+        const isTransient = upstream.status >= 500 || upstream.status === 429 || isQueueFull;
+        if (isTransient && attempt < 5) {
+          // Exponential backoff: 1.2s, 2.4s, 4s, 6s for queue-full; faster for 5xx
+          const baseDelay = isQueueFull ? 1500 : 800;
+          await sleep(baseDelay * attempt + Math.floor(Math.random() * 300));
           continue;
         }
         return reply(upstream.status, { error: lastError, attempts: attempt });
@@ -94,8 +99,8 @@ exports.handler = async (event) => {
       });
     } catch (err) {
       lastError = String((err && err.message) || err);
-      if (attempt < 3) {
-        await sleep(700 * attempt);
+      if (attempt < 5) {
+        await sleep(800 * attempt);
         continue;
       }
       return reply(502, { error: lastError, attempts: attempt });

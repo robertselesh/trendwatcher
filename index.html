@@ -2995,7 +2995,17 @@ KRITIKUS SZABÁLYOK:
 
 PÉLDA jó válasz: "A CRDO és VRT párosban a CRDO a tisztább play: 5/5 conviction, EV $212, AI-interconnect szűk keresztmetszet. A VRT inkább cooling/power infra: kevésbé specifikus, de stabilabb. Rövidtávra (4-8 hét) CRDO, hosszabb távra VRT diverzifikáció."`;
 
-async function aiCall(userMessage, opts = {}) {
+// Serialize AI calls — Pollinations free tier allows only ~1 concurrent request per IP.
+// Without this, a click during the daily-brief load triggers "Queue full" errors.
+let _aiQueue = Promise.resolve();
+function aiCall(userMessage, opts = {}) {
+  const task = () => _aiCallImpl(userMessage, opts);
+  const result = _aiQueue.then(task, task); // run regardless of prev outcome
+  _aiQueue = result.catch(() => {}); // don't poison the queue with rejections
+  return result;
+}
+
+async function _aiCallImpl(userMessage, opts = {}) {
   const messages = [];
   // For prompts that already include full ticker context (e.g. deep-dive), pass bare:true
   // to skip the watchlist-context wrap that would otherwise create dual-context confusion.
@@ -3007,21 +3017,42 @@ async function aiCall(userMessage, opts = {}) {
     content: content
   });
 
-  const resp = await fetch('/api/ai', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      messages,
-      system: SYSTEM_PROMPT,
-      maxTokens: opts.maxTokens || 1200,
-      temperature: opts.temperature || 0.6,
-      model: opts.model || 'openai'
-    })
-  });
-
-  const data = await resp.json();
-  if (!resp.ok) throw new Error(data.error || ('HTTP ' + resp.status));
-  return data.text || '';
+  // Client-side retry on top of server-side retry — for resilience against any
+  // queue-full leakage that survives the function's 5 retries.
+  let lastErr = null;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const resp = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages,
+          system: SYSTEM_PROMPT,
+          maxTokens: opts.maxTokens || 1200,
+          temperature: opts.temperature || 0.6,
+          model: opts.model || 'openai'
+        })
+      });
+      const data = await resp.json();
+      if (resp.ok) return data.text || '';
+      lastErr = data.error || ('HTTP ' + resp.status);
+      const lowErr = String(lastErr).toLowerCase();
+      const transient = resp.status === 429 || resp.status >= 500 || lowErr.includes('queue') || lowErr.includes('rate');
+      if (transient && attempt < 3) {
+        await new Promise(r => setTimeout(r, 1500 * attempt));
+        continue;
+      }
+      throw new Error(lastErr);
+    } catch (e) {
+      lastErr = e.message || String(e);
+      if (attempt < 3 && /queue|rate|fetch|network/i.test(lastErr)) {
+        await new Promise(r => setTimeout(r, 1500 * attempt));
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw new Error(lastErr || 'AI call failed');
 }
 
 async function newsCall(ticker) {
