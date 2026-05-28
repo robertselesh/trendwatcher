@@ -28,11 +28,29 @@ Cyberpunk-themed equity watchlist with **live AI commentary** and **news feed** 
 
 - Single-file vanilla HTML/CSS/JS frontend (no build step, no framework)
 - **Netlify Functions** as a serverless backend:
-  - `/api/ai` → proxies to **Pollinations.ai** (free, no API key) for AI completions
+  - `/api/ai` → **NVIDIA NIM** (Llama 3.3 70B) primary, **Pollinations.ai** fallback. Requires `NVIDIA_API_KEY` env var.
   - `/api/news` → fetches Google News RSS per ticker (free, no API key)
   - `/api/yfinance` → Yahoo chart endpoint: live price, % change, 52w range, earnings date, 60d history (free, no API key)
   - `/api/targets` → Yahoo quoteSummary (crumb+cookie auth): analyst target mean/high/low, recommendation, # analysts (free, no API key)
 - `localStorage` for watchlist + checklist + positions + price/target caches + daily brief cache
+
+## Setup: NVIDIA API key (one-time, ~2 minutes)
+
+The AI features (daily brief, Q&A chat, deep-dive) use **NVIDIA's free NIM tier** for Llama 3.3 70B. To enable:
+
+1. Go to **[build.nvidia.com](https://build.nvidia.com)** → sign up (free, GitHub/Google OAuth)
+2. Click any model card (e.g. `meta/llama-3.3-70b-instruct`) → **Get API Key** → copy the `nvapi-xxxxxxxxxxxxx` key
+3. In Netlify: **Site settings → Environment variables → Add a variable**
+   - Key: `NVIDIA_API_KEY`
+   - Value: your `nvapi-...` key
+   - Scope: All deploy contexts
+4. Trigger a redeploy (push a commit, or Netlify UI → Deploys → Trigger deploy)
+
+**Without the key**, `/api/ai` automatically falls back to Pollinations (rate-limited, less reliable). With the key, NVIDIA handles everything; Pollinations only kicks in if NVIDIA itself errors out.
+
+Free tier: NVIDIA gives ~1000 credits/month on signup. Daily brief + ~50 deep-dives + ~100 Q&A messages = well under that cap. If you exhaust it, just generate a new key.
+
+To override the model per-call, pass `{ model: 'nemotron' | 'mistral' | 'r1' | 'meta/llama-3.3-70b-instruct' | ... }` in the request body.
 
 ## Why this design
 
