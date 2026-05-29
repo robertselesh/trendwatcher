@@ -848,6 +848,48 @@
   .theme-toggle:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
   body.theme-clean .theme-toggle { letter-spacing: 0.04em; }
 
+  /* === Scenario stale-warning & live-baseline tag === */
+  .scen-vs {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-left: 6px;
+    font-weight: 400;
+  }
+  .scen-stale {
+    margin-top: 6px;
+    padding: 5px 8px;
+    border: 1px dashed var(--neon-orange);
+    background: rgba(255, 140, 0, 0.07);
+    color: var(--neon-orange);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+  .scen-rebased {
+    margin-top: 6px;
+    padding: 4px 7px;
+    border: 1px dashed var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.05);
+    color: var(--neon-cyan);
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+    opacity: 0.85;
+    cursor: help;
+  }
+  body.theme-clean .scen-rebased {
+    border-color: var(--neon-cyan) !important;
+    background: rgba(88, 166, 255, 0.05) !important;
+    color: var(--neon-cyan) !important;
+  }
+  body.theme-clean .scen-stale {
+    border-color: var(--neon-yellow) !important;
+    background: rgba(210, 153, 34, 0.08) !important;
+    color: var(--neon-yellow) !important;
+  }
+
   /* === Earnings badge === */
   .earnings-badge {
     display: inline-block;
@@ -2173,9 +2215,51 @@ const SCENARIOS = {
 function getScenarios(ticker) {
   const s = SCENARIOS[ticker];
   if (!s) return null;
-  const evVal = (s.bull * s.probs[0] + s.base * s.probs[1] + s.bear * s.probs[2]) / 100;
-  const evUpside = ((evVal - s.price) / s.price * 100);
-  return { ...s, ev: evVal, evUpside };
+
+  let bull = s.bull, base = s.base, bear = s.bear;
+  const live = (typeof liveFresh !== 'undefined' && liveFresh[ticker] && liveFresh[ticker].price) ? liveFresh[ticker].price : null;
+  let rebased = false;
+  let driftPct = 0;
+
+  // === Auto-rebase: small-to-medium drift ===
+  // If live price drifted between 3% and 15% from the research snapshot, shift
+  // all three bands by the same ABSOLUTE delta. This preserves the price gaps
+  // (Bull-Base and Base-Bear distances) while keeping the targets meaningful
+  // relative to today's price. Drift >15% is left alone (and >40% triggers STALE).
+  if (live && s.price) {
+    const drift = (live - s.price) / s.price;
+    driftPct = drift * 100;
+    const absDrift = Math.abs(drift);
+    if (absDrift >= 0.03 && absDrift <= 0.15) {
+      const delta = live - s.price;
+      bull = roundPrice(s.bull + delta);
+      base = roundPrice(s.base + delta);
+      bear = roundPrice(s.bear + delta);
+      rebased = true;
+    }
+  }
+
+  const evVal = (bull * s.probs[0] + base * s.probs[1] + bear * s.probs[2]) / 100;
+  const refPrice = live || s.price;
+  const evUpside = ((evVal - refPrice) / refPrice * 100);
+
+  // Stale only triggers above the auto-rebase ceiling — at that point the thesis
+  // itself needs re-evaluation, not just a number shift.
+  const stale = (live && s.price && Math.abs(driftPct) > 40) ? true : false;
+
+  return {
+    ...s,
+    bull, base, bear,
+    origBull: s.bull, origBase: s.base, origBear: s.bear,
+    ev: evVal, evUpside, refPrice, stale, livePrice: live,
+    rebased, driftPct
+  };
+}
+
+function roundPrice(v) {
+  if (v >= 100) return Math.round(v);
+  if (v >= 10) return Math.round(v * 10) / 10;
+  return Math.round(v * 100) / 100;
 }
 
 const CHECKLIST_ITEMS = [
@@ -2503,9 +2587,11 @@ function render() {
             <span class="scen-prob">${scen.probs[2]}%</span>
           </div>
           <div class="scen-ev">
-            <span>EXPECTED VAL</span>
+            <span>EXPECTED VAL ${scen.livePrice ? '<span class="scen-vs">vs $' + scen.livePrice.toFixed(2) + ' live</span>' : ''}</span>
             <span class="ev-val">$${scen.ev.toFixed(1)} <span class="upside ${evDir}">(${evSign}${scen.evUpside.toFixed(0)}%)</span></span>
           </div>
+          ${scen.rebased ? `<div class="scen-rebased" title="Original: Bull $${scen.origBull} · Base $${scen.origBase} · Bear $${scen.origBear} (snapshot $${scen.price.toFixed(2)})">↻ AUTO-SHIFTED ${scen.driftPct >= 0 ? '+' : ''}${scen.driftPct.toFixed(1)}% — bands tracked live price; thesis assumed intact</div>` : ''}
+          ${scen.stale ? `<div class="scen-stale">⚠ SCENARIO STALE — research snapshot $${scen.price.toFixed(2)} vs live $${scen.livePrice.toFixed(2)} (${((scen.livePrice - scen.price)/scen.price*100).toFixed(0)}% drift). Needs re-research.</div>` : ''}
         </div>`;
     }
 

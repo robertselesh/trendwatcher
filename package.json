@@ -1,6 +1,6 @@
 {
   "name": "trendwatcher",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "description": "Breakout watchlist dashboard with NVIDIA Llama 3.3 70B AI, live Yahoo prices + analyst targets, Today's Signals bar, position tracker, Google News feed",
   "engines": {
